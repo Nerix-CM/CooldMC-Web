@@ -656,19 +656,19 @@
             }
         }
 
-        // Функция получения статуса сервера
+        // Функция получения статуса сервера (через mcapi.us - работает с GitHub Pages)
         async function fetchServerStatus() {
             const statusDot = document.getElementById('status-dot');
             const statusText = document.getElementById('status-text');
             
             try {
-                // Используем IP и порт сервера (порт для входа в игру)
-                const response = await fetch('https://api.mcstatus.io/v2/java/mc.hypixel.net:25565');
+                // Используем API mcapi.us (поддерживает CORS)
+                const response = await fetch('https://mcapi.us/server/status?ip=188.127.241.222&port=25601');
                 const data = await response.json();
                 
                 if (data.online) {
                     statusDot.className = 'status-dot online';
-                    statusText.innerHTML = `Онлайн: <span class="online-count">${data.players.online}</span> / ${data.players.max}`;
+                    statusText.innerHTML = `Онлайн: <span class="online-count">${data.players.now}</span> / ${data.players.max}`;
                 } else {
                     statusDot.className = 'status-dot offline';
                     statusText.textContent = 'Сервер выключен';
