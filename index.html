@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CooldMC - Сервер Minecraft</title>
+    
+    <!-- Фавиконка -->
+    <link rel="icon" type="image/png" href="/photos/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/photos/favicon.svg" />
+    <link rel="shortcut icon" href="/photos/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/photos/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="CooldMC" />
+    <link rel="manifest" href="/photos/site.webmanifest" />
+    
+    <!-- Подключаем Press Start 2P (запасной шрифт) -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Подключение шрифта Minecraft через все 6 форматов */
+        @font-face {
+            font-family: 'Minecraft';
+            src: url('/fonts/minecraft-1-1/minecraft-1-1.eot');
+            src: url('/fonts/minecraft-1-1/minecraft-1-1.eot?#iefix') format('embedded-opentype'),
+                 url('/fonts/minecraft-1-1/minecraft-1-1.otf') format('opentype'),
+                 url('/fonts/minecraft-1-1/minecraft-1-1.svg') format('svg'),
+                 url('/fonts/minecraft-1-1/minecraft-1-1.ttf') format('truetype'),
+                 url('/fonts/minecraft-1-1/minecraft-1-1.woff') format('woff'),
+                 url('/fonts/minecraft-1-1/minecraft-1-1.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            background: -webkit-linear-gradient(180deg, #464646,#000000);
+            background: linear-gradient(180deg, #464646,#000000);
+            min-height: 100vh;
+            font-family: 'Minecraft', 'Press Start 2P', 'Courier New', monospace;
+            position: relative;
+            color: white;
+        }
+
+        /* Чтобы контент был поверх снежинок */
+        .nav-menu, .page, .bottom-right {
+            z-index: 1;
+            position: relative;
+        }
+
+        .nav-menu {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            gap: 12px;
+            z-index: 10;
+        }
+
+        .nav-item {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+            padding: 4px 8px;
+            border-radius: 8px;
+            background-color: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-item.active {
+            color: white;
+            font-size: 1.2rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+
+        .page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            overflow-y: auto;
+            padding: 100px 20px 80px 20px;
+        }
+
+        .page.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #home.page {
+            justify-content: center;
+        }
+
+        #players.page, #rules.page {
+            justify-content: flex-start;
+        }
+
+        .center-content {
+            text-align: center;
+        }
+
+        .main-title {
+            font-size: 5rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 0px #2a2a2a;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .blue {
+            color: #5555FF;
+        }
+
+        .red {
+            color: #FF5555;
+        }
+
+        .map-link {
+            font-size: 2rem;
+            color: #000000;
+            text-decoration: none;
+            background-color: rgba(255, 255, 255, 0.3);
+            padding: 10px 30px;
+            border-radius: 12px;
+            display: inline-block;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-weight: bold;
+        }
+
+        .map-link:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255,255,255,0.2);
+        }
+
+        .content-page {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            color: white;
+            text-shadow: 2px 2px 0px #2a2a2a;
+            margin-bottom: 40px;
+            text-align: left;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 10px;
+        }
+
+        .players-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .player-item {
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 15px 25px;
+            transition: all 0.3s ease;
+        }
+
+        .player-item:hover {
+            transform: scale(1.02);
+            background-color: rgba(0, 0, 0, 0.7);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .player-grid {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: start;
+            gap: 20px;
+        }
+
+        .player-left {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .player-name {
+            font-size: 2rem;
+            color: white;
+        }
+
+        .player-role {
+            font-size: 1.5rem;
+        }
+
+        .role-admin {
+            color: #FF5555;
+        }
+
+        .role-moderator {
+            color: #5555FF;
+        }
+
+        .player-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 5px;
+        }
+
+        .join-date {
+            color: #AAAAAA;
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .days-info {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .days-count {
+            color: #55FF55;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .days-label {
+            color: #FFFFFF;
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+
+        .rules-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .rule-section {
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(3px);
+            border-radius: 12px;
+            padding: 15px 20px;
+            border-left: 4px solid #FFAA55;
+        }
+
+        .main-rule {
+            font-size: 1.8rem;
+            color: #FFAA55;
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+
+        .sub-rule {
+            font-size: 1.3rem;
+            color: #DDDDDD;
+            margin-left: 20px;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .sub-rule .punishment {
+            color: #FF8888;
+            font-size: 1rem;
+        }
+
+        .sub-sub-rule {
+            font-size: 1.1rem;
+            color: #AAAAAA;
+            margin-left: 40px;
+            margin-bottom: 6px;
+            line-height: 1.4;
+        }
+
+        .sub-sub-rule .punishment {
+            color: #FF8888;
+            font-size: 0.9rem;
+        }
+
+        .punishment {
+            color: #FF8888;
+            font-style: italic;
+        }
+
+        .bottom-right {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .bottom-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 1.2rem;
+            padding: 5px 15px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .bottom-link:hover {
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 600px) {
+            .nav-menu {
+                top: 15px;
+                left: 15px;
+                gap: 8px;
+            }
+            
+            .nav-item {
+                font-size: 0.8rem;
+                padding: 3px 6px;
+            }
+            
+            .nav-item.active {
+                font-size: 1rem;
+            }
+            
+            .main-title {
+                font-size: 3rem;
+            }
+            
+            .map-link {
+                font-size: 1.5rem;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .player-name {
+                font-size: 1.5rem;
+            }
+            
+            .player-role {
+                font-size: 1.2rem;
+            }
+            
+            .join-date {
+                font-size: 0.9rem;
+            }
+            
+            .days-count, .days-label {
+                font-size: 0.9rem;
+            }
+            
+            .player-grid {
+                gap: 10px;
+            }
+            
+            .main-rule {
+                font-size: 1.4rem;
+            }
+            
+            .sub-rule {
+                font-size: 1.1rem;
+                margin-left: 10px;
+            }
+            
+            .sub-sub-rule {
+                font-size: 0.95rem;
+                margin-left: 20px;
+            }
+            
+            .bottom-right {
+                bottom: 15px;
+                right: 15px;
+                gap: 8px;
+            }
+            
+            .bottom-link {
+                font-size: 1rem;
+                padding: 4px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-menu">
+        <a class="nav-item active" onclick="switchPage('home')">Главная</a>
+        <a class="nav-item" onclick="switchPage('players')">Игроки</a>
+        <a class="nav-item" onclick="switchPage('rules')">Правила</a>
+    </div>
+
+    <div id="home" class="page active">
+        <div class="center-content">
+            <div class="main-title">
+                <span class="blue">Coold</span><span class="red">MC</span>
+            </div>
+            <a href="http://188.127.241.222:25729" class="map-link" target="_blank">Карта мира</a>
+        </div>
+    </div>
+
+    <div id="players" class="page">
+        <div class="content-page">
+            <h2 class="page-title">Игроки:</h2>
+            <div class="players-list" id="playersList"></div>
+        </div>
+    </div>
+
+    <div id="rules" class="page">
+        <div class="content-page">
+            <h2 class="page-title">Правила сервера:</h2>
+            <div class="rules-list" id="rulesList"></div>
+        </div>
+    </div>
+
+    <div class="bottom-right">
+        <a href="https://t.me/CooldMC_office_bot" class="bottom-link" target="_blank">Тг-бот</a>
+        <a href="https://t.me/Nerix_CM" class="bottom-link" target="_blank">_Nerix</a>
+    </div>
+
+    <!-- Подключение файлов -->
+    <script src="players.js"></script>
+    <script src="rules.js"></script>
+    <script src="snow.js"></script>
+
+    <script>
+        // Проверка, что данные загрузились
+        console.log('playersData загружен?', typeof playersData !== 'undefined');
+        console.log('rulesData загружен?', typeof rulesData !== 'undefined');
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ru-RU', { 
+                day: 'numeric', 
+                month: 'long'
+            });
+        }
+
+        function getDaysBetween(startDate, endDate) {
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            
+            start.setHours(0, 0, 0, 0);
+            end.setHours(0, 0, 0, 0);
+            
+            const diffTime = end - start;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            return diffDays;
+        }
+
+        function sortPlayersByRoleAndDays(players) {
+            const today = new Date().toISOString().split('T')[0];
+            
+            return [...players].sort((a, b) => {
+                if (a.role === 'admin') return -1;
+                if (b.role === 'admin') return 1;
+                
+                if (a.role === 'moderator' && b.role !== 'admin') return -1;
+                if (b.role === 'moderator' && a.role !== 'admin') return 1;
+                
+                const daysA = getDaysBetween(a.joinDate, today);
+                const daysB = getDaysBetween(b.joinDate, today);
+                return daysB - daysA;
+            });
+        }
+
+        function updateAllDays() {
+            const playersList = document.getElementById('playersList');
+            if (!playersList) return;
+            
+            if (typeof playersData === 'undefined') {
+                playersList.innerHTML = '<div class="player-item">Ошибка загрузки данных игроков</div>';
+                return;
+            }
+            
+            const today = new Date().toISOString().split('T')[0];
+            const sortedPlayers = sortPlayersByRoleAndDays(playersData);
+            
+            playersList.innerHTML = '';
+            
+            sortedPlayers.forEach(player => {
+                const daysOnServer = getDaysBetween(player.joinDate, today);
+                
+                const playerItem = document.createElement('div');
+                playerItem.className = 'player-item';
+                
+                let roleClass = '';
+                let roleHtml = '';
+                
+                if (player.role === 'admin') {
+                    roleClass = 'role-admin';
+                    roleHtml = `<span class="player-role ${roleClass}">${player.roleText}</span>`;
+                } else if (player.role === 'moderator') {
+                    roleClass = 'role-moderator';
+                    roleHtml = `<span class="player-role ${roleClass}">${player.roleText}</span>`;
+                }
+                
+                playerItem.innerHTML = `
+                    <div class="player-grid">
+                        <div class="player-left">
+                            <span class="player-name">${player.name}</span>
+                            ${roleHtml}
+                        </div>
+                        <div class="player-right">
+                            <div class="join-date">${formatDate(player.joinDate)}</div>
+                            <div class="days-info">
+                                <span class="days-count">${daysOnServer}</span>
+                                <span class="days-label">дн.</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                playersList.appendChild(playerItem);
+            });
+        }
+
+        function buildRulesList() {
+            const rulesContainer = document.getElementById('rulesList');
+            if (!rulesContainer) return;
+            
+            if (typeof rulesData === 'undefined') {
+                rulesContainer.innerHTML = '<div class="rule-section">Ошибка загрузки правил</div>';
+                return;
+            }
+            
+            rulesContainer.innerHTML = '';
+            
+            rulesData.forEach(section => {
+                const sectionDiv = document.createElement('div');
+                sectionDiv.className = 'rule-section';
+                
+                let html = `<div class="main-rule">${section.number}. ${section.title}</div>`;
+                
+                section.subRules.forEach(sub => {
+                    html += `<div class="sub-rule">• ${sub.text} ${sub.punishment ? `<span class="punishment">[${sub.punishment}]</span>` : ''}</div>`;
+                    
+                    if (sub.subSub) {
+                        sub.subSub.forEach(subsub => {
+                            html += `<div class="sub-sub-rule">◦ ${subsub.text} ${subsub.punishment ? `<span class="punishment">[${subsub.punishment}]</span>` : ''}</div>`;
+                        });
+                    }
+                });
+                
+                sectionDiv.innerHTML = html;
+                rulesContainer.appendChild(sectionDiv);
+            });
+        }
+
+        function switchPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            document.getElementById(pageId).classList.add('active');
+            document.getElementById(pageId).scrollTop = 0;
+            
+            document.querySelectorAll('.nav-item').forEach(item => {
+                if (pageId === 'home' && item.textContent === 'Главная') {
+                    item.classList.add('active');
+                } else if (pageId === 'players' && item.textContent === 'Игроки') {
+                    item.classList.add('active');
+                } else if (pageId === 'rules' && item.textContent === 'Правила') {
+                    item.classList.add('active');
+                }
+            });
+
+            if (pageId === 'players') {
+                updateAllDays();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM загружен, инициализация...');
+            updateAllDays();
+            buildRulesList();
+            
+            setInterval(() => {
+                if (document.getElementById('players').classList.contains('active')) {
+                    updateAllDays();
+                }
+            }, 60 * 60 * 1000);
+        });
+    </script>
+</body>
+</html>
