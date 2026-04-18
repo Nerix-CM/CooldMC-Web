@@ -8,22 +8,19 @@ on:
 jobs:
   update-status:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Get server status
         run: |
           curl -s "https://api.mcsrvstat.us/2/188.127.241.222:25601" > server-status.json
       
-      - name: Commit and push if changed
+      - name: Commit and push
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add server-status.json
-          git diff --staged --quiet || (git commit -m "Auto-update server status [skip ci]" && git push)
+          git commit -m "Auto-update server status" || echo "No changes"
+          git push
