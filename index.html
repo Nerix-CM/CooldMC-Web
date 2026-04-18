@@ -148,12 +148,53 @@
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
             font-weight: bold;
+            margin-top: 20px;
         }
 
         .map-link:hover {
             background-color: rgba(255, 255, 255, 0.5);
             transform: scale(1.05);
             box-shadow: 0 0 15px rgba(255,255,255,0.2);
+        }
+
+        /* Блок со статусом сервера */
+        .server-status {
+            margin-top: 30px;
+            padding: 15px 25px;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .status-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: #808080;
+            transition: all 0.3s ease;
+        }
+
+        .status-dot.online {
+            background-color: #55FF55;
+            box-shadow: 0 0 10px #55FF55;
+        }
+
+        .status-dot.offline {
+            background-color: #FF5555;
+            box-shadow: 0 0 10px #FF5555;
+        }
+
+        .status-text {
+            font-size: 1.2rem;
+        }
+
+        .online-count {
+            color: #55FF55;
+            font-weight: bold;
         }
 
         .content-page {
@@ -358,6 +399,14 @@
                 font-size: 1.5rem;
             }
             
+            .server-status {
+                padding: 10px 20px;
+            }
+            
+            .status-text {
+                font-size: 1rem;
+            }
+            
             .page-title {
                 font-size: 2rem;
             }
@@ -422,6 +471,12 @@
                 <span class="blue">Coold</span><span class="red">MC</span>
             </div>
             <a href="http://188.127.241.222:25729" class="map-link" target="_blank">Карта мира</a>
+            
+            <!-- Блок со статусом сервера -->
+            <div class="server-status">
+                <div class="status-dot" id="status-dot"></div>
+                <div class="status-text" id="status-text">Загрузка...</div>
+            </div>
         </div>
     </div>
 
@@ -601,16 +656,48 @@
             }
         }
 
+        // Функция получения статуса сервера
+        async function fetchServerStatus() {
+            const statusDot = document.getElementById('status-dot');
+            const statusText = document.getElementById('status-text');
+            
+            try {
+                // Используем IP и порт сервера (порт для входа в игру)
+                const response = await fetch('https://api.mcstatus.io/v2/java/188.127.241.222:25601');
+                const data = await response.json();
+                
+                if (data.online) {
+                    statusDot.className = 'status-dot online';
+                    statusText.innerHTML = `Онлайн: <span class="online-count">${data.players.online}</span> / ${data.players.max}`;
+                } else {
+                    statusDot.className = 'status-dot offline';
+                    statusText.textContent = 'Сервер выключен';
+                }
+            } catch (error) {
+                statusDot.className = 'status-dot offline';
+                statusText.textContent = 'Ошибка подключения';
+                console.error('Ошибка:', error);
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             console.log('DOM загружен, инициализация...');
             updateAllDays();
             buildRulesList();
+            fetchServerStatus();
             
             setInterval(() => {
                 if (document.getElementById('players').classList.contains('active')) {
                     updateAllDays();
                 }
             }, 60 * 60 * 1000);
+            
+            // Обновляем статус сервера каждую минуту
+            setInterval(() => {
+                if (document.getElementById('home').classList.contains('active')) {
+                    fetchServerStatus();
+                }
+            }, 60000);
         });
     </script>
 </body>
