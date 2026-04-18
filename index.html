@@ -656,19 +656,19 @@
             }
         }
 
-        // Функция получения статуса сервера (через mcapi.us - работает с GitHub Pages)
+        // Функция получения статуса сервера (через mcsrvstat - быстрое обновление)
         async function fetchServerStatus() {
             const statusDot = document.getElementById('status-dot');
             const statusText = document.getElementById('status-text');
             
             try {
-                // Используем API mcapi.us (поддерживает CORS)
-                const response = await fetch('https://mcapi.us/server/status?ip=188.127.241.222&port=25601');
+                // Используем API mcsrvstat (обновляется быстро, не кэширует)
+                const response = await fetch('https://api.mcsrvstat.us/2/188.127.241.222:25601');
                 const data = await response.json();
                 
                 if (data.online) {
                     statusDot.className = 'status-dot online';
-                    statusText.innerHTML = `Онлайн: <span class="online-count">${data.players.now}</span> / ${data.players.max}`;
+                    statusText.innerHTML = `Онлайн: <span class="online-count">${data.players.online}</span> / ${data.players.max}`;
                 } else {
                     statusDot.className = 'status-dot offline';
                     statusText.textContent = 'Сервер выключен';
@@ -692,12 +692,12 @@
                 }
             }, 60 * 60 * 1000);
             
-            // Обновляем статус сервера каждую минуту
+            // Обновляем статус сервера каждые 30 секунд
             setInterval(() => {
                 if (document.getElementById('home').classList.contains('active')) {
                     fetchServerStatus();
                 }
-            }, 60000);
+            }, 30000);
         });
     </script>
 </body>
