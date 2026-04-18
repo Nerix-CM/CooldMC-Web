@@ -656,14 +656,14 @@
             }
         }
 
-        // Функция получения статуса сервера (через mcsrvstat - быстрое обновление)
+        // Функция получения статуса сервера (читаем локальный JSON, который обновляет GitHub Actions)
         async function fetchServerStatus() {
             const statusDot = document.getElementById('status-dot');
             const statusText = document.getElementById('status-text');
             
             try {
-                // Используем API mcsrvstat (обновляется быстро, не кэширует)
-                const response = await fetch('https://api.mcsrvstat.us/2/188.127.241.222:25601');
+                // Читаем файл, который обновляет GitHub Actions
+                const response = await fetch('server-status.json');
                 const data = await response.json();
                 
                 if (data.online) {
@@ -692,7 +692,7 @@
                 }
             }, 60 * 60 * 1000);
             
-            // Обновляем статус сервера каждые 30 секунд
+            // Обновляем статус сервера каждые 30 секунд (читаем обновлённый JSON)
             setInterval(() => {
                 if (document.getElementById('home').classList.contains('active')) {
                     fetchServerStatus();
