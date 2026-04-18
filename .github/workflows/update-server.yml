@@ -1,0 +1,26 @@
+name: Update Server Status
+
+on:
+  schedule:
+    - cron: '*/2 * * * *'  # Каждые 2 минуты
+  workflow_dispatch:       # Можно запустить вручную
+
+jobs:
+  update-status:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Get server status
+        run: |
+          curl -s "https://api.mcsrvstat.us/2/188.127.241.222:25601" > server-status.json
+      
+      - name: Commit and push if changed
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add server-status.json
+          git diff --quiet && git diff --staged --quiet || git commit -m "Auto-update server status"
+          git push
