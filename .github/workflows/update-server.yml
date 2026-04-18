@@ -4,6 +4,8 @@ on:
   schedule:
     - cron: '*/2 * * * *'
   workflow_dispatch:
+  push:
+    branches: [ main ]
 
 jobs:
   update-status:
@@ -19,8 +21,8 @@ jobs:
       
       - name: Commit and push
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
           git add server-status.json
-          git commit -m "Auto-update server status" || echo "No changes"
+          git commit -m "Auto-update server status [skip ci]" || echo "No changes to commit"
           git push
