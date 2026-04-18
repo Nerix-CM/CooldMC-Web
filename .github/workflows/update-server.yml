@@ -2,7 +2,7 @@ name: Update Server Status
 
 on:
   schedule:
-    - cron: '*/1 * * * *'  # Каждые 2 минуты
+    - cron: '*/2 * * * *'  # Каждые 2 минуты
   workflow_dispatch:       # Можно запустить вручную
 
 jobs:
