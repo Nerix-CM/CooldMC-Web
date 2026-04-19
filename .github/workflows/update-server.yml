@@ -2,10 +2,15 @@ name: Update Server Status
 
 on:
   schedule:
-    - cron: '*/1 * * * *'
-  workflow_dispatch:
+    - cron: '*/10 * * * *' # Изменено на 10 минут (минимум для стабильности)
+  workflow_dispatch:      # Оставляем для ручного запуска
   push:
     branches: [ main ]
+    paths-ignore:         # Не запускать экшен, если изменился только этот файл
+      - 'server-status.json'
+
+permissions:              # Добавляем права на запись
+  contents: write
 
 jobs:
   update-status:
@@ -24,5 +29,10 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add server-status.json
-          git commit -m "Auto-update server status [skip ci]" || echo "No changes to commit"
-          git push
+          # Проверка на наличие изменений, чтобы не плодить пустые коммиты
+          if git diff --quiet && git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto-update server status [skip ci]"
+            git push
+          fi
