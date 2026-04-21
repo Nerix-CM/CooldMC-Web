@@ -1,4 +1,3 @@
-// players.js
 const playersData = [
     { name: "_Nerix", role: "admin", roleText: "Администратор", joinDate: "2025-09-11" },
     { name: "Tarkos0", role: "moderator", roleText: "Модератор", joinDate: "2025-09-12" },
