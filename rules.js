@@ -1,4 +1,3 @@
-// rules.js - файл с правилами сервера
 const rulesData = [
     {
         number: "1",
