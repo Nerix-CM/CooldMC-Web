@@ -1,4 +1,3 @@
-// snow.js - эффект падающих снежинок (эмодзи)
 class SnowEffect {
     constructor() {
         this.container = null;
