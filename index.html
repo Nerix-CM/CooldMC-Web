@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CooldMC - Сервер Minecraft</title>
     
-    <!-- Фавиконка -->
     <link rel="icon" type="image/png" href="photos/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="photos/favicon.svg" />
     <link rel="shortcut icon" href="photos/favicon.ico" />
@@ -13,11 +12,9 @@
     <meta name="apple-mobile-web-app-title" content="CooldMC" />
     <link rel="manifest" href="photos/site.webmanifest" />
     
-    <!-- Подключаем Press Start 2P (запасной шрифт) -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     
     <style>
-        /* Подключение шрифта Minecraft через все 6 форматов */
         @font-face {
             font-family: 'Minecraft';
             src: url('fonts/minecraft-1-1/minecraft-1-1.eot');
@@ -52,7 +49,6 @@
             color: white;
         }
 
-        /* Чтобы контент был поверх снежинок */
         .nav-menu, .page, .bottom-right {
             z-index: 1;
             position: relative;
@@ -472,7 +468,6 @@
                 <span class="blue">Coold</span><span class="red">MC</span>
             </div>
             
-            <!-- Блок со статусом сервера (между названием и кнопкой) -->
             <div class="server-status">
                 <div class="status-dot" id="status-dot"></div>
                 <div class="status-text" id="status-text">Загрузка...</div>
@@ -501,13 +496,11 @@
         <a href="https://t.me/Nerix_CM" class="bottom-link" target="_blank">_Nerix</a>
     </div>
 
-    <!-- Подключение файлов -->
     <script src="players.js"></script>
     <script src="rules.js"></script>
     <script src="snow.js"></script>
 
     <script>
-        // Проверка, что данные загрузились
         console.log('playersData загружен?', typeof playersData !== 'undefined');
         console.log('rulesData загружен?', typeof rulesData !== 'undefined');
 
@@ -658,7 +651,6 @@
             }
         }
 
-        // Функция получения статуса сервера (прямой API, обновление каждые 30 секунд)
         async function fetchServerStatus() {
             const statusDot = document.getElementById('status-dot');
             const statusText = document.getElementById('status-text');
@@ -693,7 +685,6 @@
                 }
             }, 60 * 60 * 1000);
             
-            // Обновляем статус сервера каждые 30 секунд
             setInterval(() => {
                 if (document.getElementById('home').classList.contains('active')) {
                     fetchServerStatus();
