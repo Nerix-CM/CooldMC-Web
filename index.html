@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CooldMC - Сервер Minecraft</title>
     
+    <!-- Фавиконка -->
     <link rel="icon" type="image/png" href="photos/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="photos/favicon.svg" />
     <link rel="shortcut icon" href="photos/favicon.ico" />
@@ -12,9 +13,11 @@
     <meta name="apple-mobile-web-app-title" content="CooldMC" />
     <link rel="manifest" href="photos/site.webmanifest" />
     
+    <!-- Подключаем Press Start 2P (запасной шрифт) -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     
     <style>
+        /* Подключение шрифта Minecraft через все 6 форматов */
         @font-face {
             font-family: 'Minecraft';
             src: url('fonts/minecraft-1-1/minecraft-1-1.eot');
@@ -49,6 +52,7 @@
             color: white;
         }
 
+        /* Чтобы контент был поверх снежинок */
         .nav-menu, .page, .bottom-right {
             z-index: 1;
             position: relative;
@@ -109,7 +113,7 @@
             justify-content: center;
         }
 
-        #players.page, #rules.page {
+        #players.page, #rules.page, #functions.page {
             justify-content: flex-start;
         }
 
@@ -133,7 +137,6 @@
             color: #FF5555;
         }
 
-        /* Блок со статусом сервера */
         .server-status {
             margin-bottom: 15px;
             padding: 10px 25px;
@@ -208,6 +211,17 @@
             padding-bottom: 10px;
         }
 
+        .section-subtitle {
+            font-size: 2rem;
+            color: white;
+            text-shadow: 2px 2px 0px #2a2a2a;
+            margin: 30px 0 20px 0;
+            text-align: left;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 10px;
+        }
+
+        /* Стили для списка игроков */
         .players-list {
             display: flex;
             flex-direction: column;
@@ -290,6 +304,7 @@
             opacity: 0.7;
         }
 
+        /* Стили для правил */
         .rules-list {
             display: flex;
             flex-direction: column;
@@ -340,6 +355,82 @@
         .punishment {
             color: #FF8888;
             font-style: italic;
+        }
+
+        /* Стили для функций */
+        .functions-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .function-item {
+            font-size: 1.3rem;
+            color: #DDDDDD;
+            line-height: 1.4;
+            margin-left: 20px;
+        }
+
+        .function-item .note-gray {
+            color: #AAAAAA;
+            font-size: 1.1rem;
+        }
+
+        /* Стили для модов и ресурс-паков */
+        .mods-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .mod-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(3px);
+            border-radius: 12px;
+            padding: 12px 20px;
+            border-left: 4px solid #FFAA55;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .mod-info {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .mod-type {
+            font-size: 1rem;
+            color: #FFAA55;
+        }
+
+        .mod-name {
+            font-size: 1.3rem;
+            color: white;
+        }
+
+        .download-btn {
+            background-color: #55FF55;
+            color: #000000;
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-family: 'Minecraft', 'Press Start 2P', monospace;
+        }
+
+        .download-btn:hover {
+            background-color: #33CC33;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px #55FF55;
         }
 
         .bottom-right {
@@ -408,6 +499,10 @@
                 font-size: 2rem;
             }
             
+            .section-subtitle {
+                font-size: 1.6rem;
+            }
+            
             .player-name {
                 font-size: 1.5rem;
             }
@@ -437,9 +532,22 @@
                 margin-left: 10px;
             }
             
-            .sub-sub-rule {
-                font-size: 0.95rem;
-                margin-left: 20px;
+            .function-item {
+                font-size: 1rem;
+                margin-left: 10px;
+            }
+            
+            .function-item .note-gray {
+                font-size: 0.9rem;
+            }
+            
+            .mod-name {
+                font-size: 1.1rem;
+            }
+            
+            .download-btn {
+                padding: 6px 15px;
+                font-size: 0.8rem;
             }
             
             .bottom-right {
@@ -460,6 +568,7 @@
         <a class="nav-item active" onclick="switchPage('home')">Главная</a>
         <a class="nav-item" onclick="switchPage('players')">Игроки</a>
         <a class="nav-item" onclick="switchPage('rules')">Правила</a>
+        <a class="nav-item" onclick="switchPage('functions')">Функции</a>
     </div>
 
     <div id="home" class="page active">
@@ -491,18 +600,33 @@
         </div>
     </div>
 
+    <div id="functions" class="page">
+        <div class="content-page">
+            <h2 class="page-title">Функции:</h2>
+            <div class="functions-list" id="functionsList"></div>
+            
+            <h3 class="section-subtitle">Моды и ресурс паки:</h3>
+            <div class="mods-list" id="modsList"></div>
+        </div>
+    </div>
+
     <div class="bottom-right">
         <a href="https://t.me/CooldMC_office_bot" class="bottom-link" target="_blank">Тг-бот</a>
         <a href="https://t.me/Nerix_CM" class="bottom-link" target="_blank">_Nerix</a>
     </div>
 
+    <!-- Подключение файлов -->
     <script src="players.js"></script>
     <script src="rules.js"></script>
+    <script src="functions.js"></script>
     <script src="snow.js"></script>
 
     <script>
+        // Проверка, что данные загрузились
         console.log('playersData загружен?', typeof playersData !== 'undefined');
         console.log('rulesData загружен?', typeof rulesData !== 'undefined');
+        console.log('functionsData загружен?', typeof functionsData !== 'undefined');
+        console.log('modsData загружен?', typeof modsData !== 'undefined');
 
         function formatDate(dateString) {
             const date = new Date(dateString);
@@ -624,6 +748,57 @@
             });
         }
 
+        function buildFunctionsList() {
+            const functionsContainer = document.getElementById('functionsList');
+            if (!functionsContainer) return;
+            
+            if (typeof functionsData === 'undefined') {
+                functionsContainer.innerHTML = '<div class="function-item">Ошибка загрузки функций</div>';
+                return;
+            }
+            
+            functionsContainer.innerHTML = '';
+            
+            functionsData.forEach(func => {
+                const funcDiv = document.createElement('div');
+                funcDiv.className = 'function-item';
+                
+                // Обработка текста с выделением серого цвета в скобках
+                let text = func.text;
+                text = text.replace(/\(([^)]+)\)/g, '<span class="note-gray">($1)</span>');
+                
+                funcDiv.innerHTML = `• ${text}`;
+                functionsContainer.appendChild(funcDiv);
+            });
+        }
+
+        function buildModsList() {
+            const modsContainer = document.getElementById('modsList');
+            if (!modsContainer) return;
+            
+            if (typeof modsData === 'undefined') {
+                modsContainer.innerHTML = '<div class="mod-item">Ошибка загрузки модов</div>';
+                return;
+            }
+            
+            modsContainer.innerHTML = '';
+            
+            modsData.forEach(mod => {
+                const modDiv = document.createElement('div');
+                modDiv.className = 'mod-item';
+                
+                modDiv.innerHTML = `
+                    <div class="mod-info">
+                        <div class="mod-type">${mod.type}</div>
+                        <div class="mod-name">${mod.name}</div>
+                    </div>
+                    <a href="${mod.link}" class="download-btn" target="_blank">Скачать</a>
+                `;
+                
+                modsContainer.appendChild(modDiv);
+            });
+        }
+
         function switchPage(pageId) {
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
@@ -643,6 +818,8 @@
                     item.classList.add('active');
                 } else if (pageId === 'rules' && item.textContent === 'Правила') {
                     item.classList.add('active');
+                } else if (pageId === 'functions' && item.textContent === 'Функции') {
+                    item.classList.add('active');
                 }
             });
 
@@ -651,6 +828,7 @@
             }
         }
 
+        // Функция получения статуса сервера (прямой API, обновление каждые 30 секунд)
         async function fetchServerStatus() {
             const statusDot = document.getElementById('status-dot');
             const statusText = document.getElementById('status-text');
@@ -677,6 +855,8 @@
             console.log('DOM загружен, инициализация...');
             updateAllDays();
             buildRulesList();
+            buildFunctionsList();
+            buildModsList();
             fetchServerStatus();
             
             setInterval(() => {
