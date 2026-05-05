@@ -28,7 +28,7 @@ const functionsData = [
 ];
 
 const modsData = [
-    { type: "Ресурс пак", name: "V-CooldMC-2.3", link: "https://drive.google.com/uc?export=view&id=1U1xbFgJWXXGuNJcAXF3odoyAOrnsdzMO" },
+    { type: "Ресурс пак", name: "V-CooldMC-2.4", link: "https://drive.google.com/uc?export=view&id=1U1xbFgJWXXGuNJcAXF3odoyAOrnsdzMO" },
     { type: "Мод", name: "Armor Poser", link: "https://modrinth.com/mod/armor-poser" },
     { type: "Мод", name: "Simple Voice Chat", link: "https://modrinth.com/plugin/simple-voice-chat" },
     { type: "Мод", name: "Voice Messages", link: "https://modrinth.com/plugin/voicemessages" }, 
