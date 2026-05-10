@@ -65,7 +65,7 @@
             right: 20px;
             display: flex;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 10px;
             z-index: 10;
         }
 
@@ -74,8 +74,8 @@
             transition: all 0.3s ease;
             text-decoration: none;
             color: rgba(255, 255, 255, 0.7);
-            font-size: 1rem;
-            padding: 6px 14px;
+            font-size: 0.9rem;
+            padding: 4px 8px;
             border-radius: 8px;
             background-color: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(5px);
@@ -85,7 +85,7 @@
 
         .nav-item.active {
             color: white;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             background-color: rgba(255, 255, 255, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.3);
             box-shadow: 0 0 20px rgba(255,255,255,0.2);
@@ -441,11 +441,21 @@
 
         .faq-question .question-text .bold-quote {
             font-weight: bold;
-            color: #FFAA55;
+            color: inherit;
         }
 
         .faq-question .admin-name {
             color: #5555FF;
+            font-weight: bold;
+        }
+
+        .faq-question .role-moderator {
+            color: #5555FF;
+            font-weight: bold;
+        }
+
+        .faq-question .role-beta {
+            color: #FFFF55;
             font-weight: bold;
         }
 
@@ -472,7 +482,7 @@
 
         .faq-answer .bold-quote {
             font-weight: bold;
-            color: #FFAA55;
+            color: inherit;
         }
 
         .faq-answer .admin-name {
@@ -494,9 +504,10 @@
             font-size: 0.85rem;
             color: #888888;
             margin-top: 12px;
-            display: inline-block;
+            display: block;
             cursor: pointer;
             transition: all 0.3s ease;
+            text-align: left;
         }
 
         .faq-hide-toggle:hover {
@@ -598,16 +609,16 @@
                 top: 15px;
                 left: 15px;
                 right: 15px;
-                gap: 8px;
+                gap: 6px;
             }
             
             .nav-item {
-                font-size: 0.8rem;
-                padding: 5px 10px;
+                font-size: 0.7rem;
+                padding: 3px 6px;
             }
             
             .nav-item.active {
-                font-size: 0.95rem;
+                font-size: 0.9rem;
             }
             
             .main-title {
@@ -707,17 +718,6 @@
                 padding: 4px 10px;
             }
         }
-
-        @media (max-width: 480px) {
-            .nav-item {
-                font-size: 0.7rem;
-                padding: 4px 8px;
-            }
-            
-            .nav-item.active {
-                font-size: 0.85rem;
-            }
-        }
     </style>
 </head>
 <body>
@@ -788,7 +788,6 @@
     <script src="snow.js"></script>
 
     <script>
-        // Проверка, что данные загрузились
         console.log('playersData загружен?', typeof playersData !== 'undefined');
         console.log('rulesData загружен?', typeof rulesData !== 'undefined');
         console.log('functionsData загружен?', typeof functionsData !== 'undefined');
@@ -971,16 +970,18 @@
                 let processedQuestion = item.question;
                 processedQuestion = processedQuestion.replace(/«([^»]+)»/g, '<span class="bold-quote">«$1»</span>');
                 processedQuestion = processedQuestion.replace(/@(Nerix_CM)/g, '<span class="admin-name">@$1</span>');
+                processedQuestion = processedQuestion.replace(/«Модератор»/g, '"<span class="role-moderator">Модератор</span>"');
+                processedQuestion = processedQuestion.replace(/«Бета-тестер»/g, '"<span class="role-beta">Бета-тестер</span>"');
                 
                 let processedAnswer = item.answer;
                 processedAnswer = processedAnswer.replace(/«([^»]+)»/g, '<span class="bold-quote">«$1»</span>');
                 processedAnswer = processedAnswer.replace(/@(Nerix_CM)/g, '<span class="admin-name">@$1</span>');
-                processedAnswer = processedAnswer.replace(/«Модератор»/g, '<span class="role-moderator">«Модератор»</span>');
-                processedAnswer = processedAnswer.replace(/«Бета-тестер»/g, '<span class="role-beta">«Бета-тестер»</span>');
+                processedAnswer = processedAnswer.replace(/«Модератор»/g, '"<span class="role-moderator">Модератор</span>"');
+                processedAnswer = processedAnswer.replace(/«Бета-тестер»/g, '"<span class="role-beta">Бета-тестер</span>"');
                 
                 faqItem.innerHTML = `
                     <div class="faq-question" data-index="${index}">
-                        <div class="question-text">❓ ${processedQuestion}</div>
+                        <div class="question-text">${processedQuestion}</div>
                         <div class="faq-toggle">▼ Показать ответ</div>
                     </div>
                     <div class="faq-answer" id="faq-answer-${index}" style="display: none;">
@@ -1008,7 +1009,7 @@
                 }
                 
                 question.addEventListener('click', (e) => {
-                    if (e.target.classList.contains('faq-hide-toggle')) return;
+                    if (e.target === hideToggle || (hideToggle && hideToggle.contains(e.target))) return;
                     
                     if (answer.style.display === 'none') {
                         if (toggle) toggle.style.display = 'none';
