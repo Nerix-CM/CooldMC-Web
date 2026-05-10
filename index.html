@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CooldMC - Сервер Minecraft</title>
     
+    <!-- Фавиконка -->
     <link rel="icon" type="image/png" href="photos/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="photos/favicon.svg" />
     <link rel="shortcut icon" href="photos/favicon.ico" />
@@ -12,9 +13,11 @@
     <meta name="apple-mobile-web-app-title" content="CooldMC" />
     <link rel="manifest" href="photos/site.webmanifest" />
     
+    <!-- Подключаем Press Start 2P (запасной шрифт) -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     
     <style>
+        /* Подключение шрифта Minecraft через все 6 форматов */
         @font-face {
             font-family: 'Minecraft';
             src: url('fonts/minecraft-1-1/minecraft-1-1.eot');
@@ -49,6 +52,7 @@
             color: white;
         }
 
+        /* Чтобы контент был поверх снежинок */
         .nav-menu, .page, .bottom-right {
             z-index: 1;
             position: relative;
@@ -58,8 +62,10 @@
             position: absolute;
             top: 20px;
             left: 20px;
+            right: 20px;
             display: flex;
-            gap: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
             z-index: 10;
         }
 
@@ -68,17 +74,18 @@
             transition: all 0.3s ease;
             text-decoration: none;
             color: rgba(255, 255, 255, 0.7);
-            font-size: 1rem;
-            padding: 4px 8px;
+            font-size: 0.9rem;
+            padding: 6px 12px;
             border-radius: 8px;
             background-color: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            white-space: nowrap;
         }
 
         .nav-item.active {
             color: white;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             background-color: rgba(255, 255, 255, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.3);
             box-shadow: 0 0 20px rgba(255,255,255,0.2);
@@ -109,7 +116,7 @@
             justify-content: center;
         }
 
-        #players.page, #rules.page, #functions.page {
+        #players.page, #rules.page, #functions.page, #faq.page {
             justify-content: flex-start;
         }
 
@@ -217,6 +224,7 @@
             padding-bottom: 10px;
         }
 
+        /* Стили для списка игроков */
         .players-list {
             display: flex;
             flex-direction: column;
@@ -268,6 +276,10 @@
             color: #5555FF;
         }
 
+        .role-beta {
+            color: #FFFF55;
+        }
+
         .player-right {
             display: flex;
             flex-direction: column;
@@ -299,6 +311,7 @@
             opacity: 0.7;
         }
 
+        /* Стили для правил */
         .rules-list {
             display: flex;
             flex-direction: column;
@@ -351,6 +364,7 @@
             font-style: italic;
         }
 
+        /* Стили для функций */
         .functions-list {
             display: flex;
             flex-direction: column;
@@ -388,6 +402,82 @@
             color: white;
         }
 
+        .function-text .bold-quote {
+            font-weight: bold;
+            color: white;
+        }
+
+        /* Стили для FAQ */
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .faq-item {
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(3px);
+            border-radius: 12px;
+            border-left: 4px solid #5555FF;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .faq-item:hover {
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .faq-question {
+            font-size: 1.4rem;
+            color: #DDDDDD;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            user-select: none;
+        }
+
+        .faq-question:hover {
+            color: white;
+        }
+
+        .faq-question .question-text {
+            flex: 1;
+        }
+
+        .faq-question .question-text .bold-quote {
+            font-weight: bold;
+            color: #FFAA55;
+        }
+
+        .faq-toggle {
+            font-size: 0.9rem;
+            color: #888888;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .faq-question:hover .faq-toggle {
+            color: #AAAAAA;
+        }
+
+        .faq-answer {
+            font-size: 1.1rem;
+            color: #AAAAAA;
+            line-height: 1.5;
+            padding: 0 20px 15px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 0;
+        }
+
+        .faq-answer .bold-quote {
+            font-weight: bold;
+            color: #FFAA55;
+        }
+
+        /* Стили для модов и ресурс-паков */
         .mods-list {
             display: flex;
             flex-direction: column;
@@ -481,16 +571,17 @@
             .nav-menu {
                 top: 15px;
                 left: 15px;
-                gap: 8px;
+                right: 15px;
+                gap: 6px;
             }
             
             .nav-item {
-                font-size: 0.8rem;
-                padding: 3px 6px;
+                font-size: 0.7rem;
+                padding: 4px 8px;
             }
             
             .nav-item.active {
-                font-size: 1rem;
+                font-size: 0.9rem;
             }
             
             .main-title {
@@ -556,6 +647,20 @@
                 font-size: 0.9rem;
             }
             
+            .faq-question {
+                font-size: 1.1rem;
+                padding: 12px 15px;
+            }
+            
+            .faq-answer {
+                font-size: 0.95rem;
+                padding: 0 15px 12px 15px;
+            }
+            
+            .faq-toggle {
+                font-size: 0.7rem;
+            }
+            
             .mod-name {
                 font-size: 1.1rem;
             }
@@ -576,6 +681,17 @@
                 padding: 4px 10px;
             }
         }
+
+        @media (max-width: 480px) {
+            .nav-item {
+                font-size: 0.65rem;
+                padding: 3px 6px;
+            }
+            
+            .nav-item.active {
+                font-size: 0.8rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -584,6 +700,7 @@
         <a class="nav-item" onclick="switchPage('players')">Игроки</a>
         <a class="nav-item" onclick="switchPage('rules')">Правила</a>
         <a class="nav-item" onclick="switchPage('functions')">Функции</a>
+        <a class="nav-item" onclick="switchPage('faq')">FAQ</a>
     </div>
 
     <div id="home" class="page active">
@@ -625,20 +742,31 @@
         </div>
     </div>
 
+    <div id="faq" class="page">
+        <div class="content-page">
+            <h2 class="page-title">FAQ:</h2>
+            <div class="faq-list" id="faqList"></div>
+        </div>
+    </div>
+
     <div class="bottom-right">
         <a href="https://t.me/CooldMC_office_bot" class="bottom-link" target="_blank">Тг-бот</a>
         <a href="https://t.me/Nerix_CM" class="bottom-link" target="_blank">_Nerix</a>
     </div>
 
+    <!-- Подключение файлов -->
     <script src="players.js"></script>
     <script src="rules.js"></script>
     <script src="functions.js"></script>
+    <script src="faq.js"></script>
     <script src="snow.js"></script>
 
     <script>
+        // Проверка, что данные загрузились
         console.log('playersData загружен?', typeof playersData !== 'undefined');
         console.log('rulesData загружен?', typeof rulesData !== 'undefined');
         console.log('functionsData загружен?', typeof functionsData !== 'undefined');
+        console.log('faqData загружен?', typeof faqData !== 'undefined');
         console.log('modsData загружен?', typeof modsData !== 'undefined');
 
         function formatDate(dateString) {
@@ -671,6 +799,9 @@
                 
                 if (a.role === 'moderator' && b.role !== 'admin') return -1;
                 if (b.role === 'moderator' && a.role !== 'admin') return 1;
+                
+                if (a.role === 'beta' && b.role !== 'admin' && b.role !== 'moderator') return -1;
+                if (b.role === 'beta' && a.role !== 'admin' && a.role !== 'moderator') return 1;
                 
                 const daysA = getDaysBetween(a.joinDate, today);
                 const daysB = getDaysBetween(b.joinDate, today);
@@ -706,6 +837,9 @@
                     roleHtml = `<span class="player-role ${roleClass}">${player.roleText}</span>`;
                 } else if (player.role === 'moderator') {
                     roleClass = 'role-moderator';
+                    roleHtml = `<span class="player-role ${roleClass}">${player.roleText}</span>`;
+                } else if (player.role === 'beta') {
+                    roleClass = 'role-beta';
                     roleHtml = `<span class="player-role ${roleClass}">${player.roleText}</span>`;
                 }
                 
@@ -784,10 +918,64 @@
                     processedText = processedText.replace(regex, '<span class="mod-name-bold">$1</span>');
                 });
                 
+                processedText = processedText.replace(/«([^»]+)»/g, '<span class="mod-name-bold">«$1»</span>');
+                
                 processedText = processedText.replace(/\(([^)]+)\)/g, '<span class="note-gray">($1)</span>');
                 
                 funcDiv.innerHTML = `<div class="function-text">• ${processedText}</div>`;
                 functionsContainer.appendChild(funcDiv);
+            });
+        }
+
+        function buildFaqList() {
+            const faqContainer = document.getElementById('faqList');
+            if (!faqContainer) return;
+            
+            if (typeof faqData === 'undefined') {
+                faqContainer.innerHTML = '<div class="faq-item">Ошибка загрузки FAQ</div>';
+                return;
+            }
+            
+            faqContainer.innerHTML = '';
+            
+            faqData.forEach((item, index) => {
+                const faqItem = document.createElement('div');
+                faqItem.className = 'faq-item';
+                
+                let processedQuestion = item.question;
+                processedQuestion = processedQuestion.replace(/«([^»]+)»/g, '<span class="bold-quote">«$1»</span>');
+                
+                let processedAnswer = item.answer;
+                processedAnswer = processedAnswer.replace(/«([^»]+)»/g, '<span class="bold-quote">«$1»</span>');
+                processedAnswer = processedAnswer.replace(/@([^\s]+)/g, '<span class="bold-quote">@$1</span>');
+                
+                faqItem.innerHTML = `
+                    <div class="faq-question" data-index="${index}">
+                        <span class="question-text">❓ ${processedQuestion}</span>
+                        <span class="faq-toggle">▼ Показать ответ</span>
+                    </div>
+                    <div class="faq-answer" id="faq-answer-${index}" style="display: none;">
+                        ${processedAnswer}
+                    </div>
+                `;
+                
+                faqContainer.appendChild(faqItem);
+            });
+            
+            document.querySelectorAll('.faq-question').forEach(question => {
+                question.addEventListener('click', () => {
+                    const index = question.getAttribute('data-index');
+                    const answer = document.getElementById(`faq-answer-${index}`);
+                    const toggle = question.querySelector('.faq-toggle');
+                    
+                    if (answer.style.display === 'none') {
+                        answer.style.display = 'block';
+                        toggle.innerHTML = '▲ Скрыть ответ';
+                    } else {
+                        answer.style.display = 'none';
+                        toggle.innerHTML = '▼ Показать ответ';
+                    }
+                });
             });
         }
 
@@ -839,6 +1027,8 @@
                     item.classList.add('active');
                 } else if (pageId === 'functions' && item.textContent === 'Функции') {
                     item.classList.add('active');
+                } else if (pageId === 'faq' && item.textContent === 'FAQ') {
+                    item.classList.add('active');
                 }
             });
 
@@ -874,6 +1064,7 @@
             updateAllDays();
             buildRulesList();
             buildFunctionsList();
+            buildFaqList();
             buildModsList();
             fetchServerStatus();
             
