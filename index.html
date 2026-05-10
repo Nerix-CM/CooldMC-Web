@@ -65,7 +65,7 @@
             right: 20px;
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 12px;
             z-index: 10;
         }
 
@@ -74,8 +74,8 @@
             transition: all 0.3s ease;
             text-decoration: none;
             color: rgba(255, 255, 255, 0.7);
-            font-size: 0.9rem;
-            padding: 6px 12px;
+            font-size: 1rem;
+            padding: 6px 14px;
             border-radius: 8px;
             background-color: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(5px);
@@ -85,7 +85,7 @@
 
         .nav-item.active {
             color: white;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             background-color: rgba(255, 255, 255, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.3);
             box-shadow: 0 0 20px rgba(255,255,255,0.2);
@@ -428,14 +428,10 @@
         }
 
         .faq-question {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             color: #DDDDDD;
             padding: 15px 20px;
             cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
             user-select: none;
         }
 
@@ -443,20 +439,22 @@
             color: white;
         }
 
-        .faq-question .question-text {
-            flex: 1;
-        }
-
         .faq-question .question-text .bold-quote {
             font-weight: bold;
             color: #FFAA55;
         }
 
+        .faq-question .admin-name {
+            color: #5555FF;
+            font-weight: bold;
+        }
+
         .faq-toggle {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #888888;
+            margin-top: 8px;
+            display: inline-block;
             transition: all 0.3s ease;
-            white-space: nowrap;
         }
 
         .faq-question:hover .faq-toggle {
@@ -469,12 +467,40 @@
             line-height: 1.5;
             padding: 0 20px 15px 20px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: 0;
+            margin-top: 8px;
         }
 
         .faq-answer .bold-quote {
             font-weight: bold;
             color: #FFAA55;
+        }
+
+        .faq-answer .admin-name {
+            color: #5555FF;
+            font-weight: bold;
+        }
+
+        .faq-answer .role-moderator {
+            color: #5555FF;
+            font-weight: bold;
+        }
+
+        .faq-answer .role-beta {
+            color: #FFFF55;
+            font-weight: bold;
+        }
+
+        .faq-hide-toggle {
+            font-size: 0.85rem;
+            color: #888888;
+            margin-top: 12px;
+            display: inline-block;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .faq-hide-toggle:hover {
+            color: #AAAAAA;
         }
 
         /* Стили для модов и ресурс-паков */
@@ -572,16 +598,16 @@
                 top: 15px;
                 left: 15px;
                 right: 15px;
-                gap: 6px;
+                gap: 8px;
             }
             
             .nav-item {
-                font-size: 0.7rem;
-                padding: 4px 8px;
+                font-size: 0.8rem;
+                padding: 5px 10px;
             }
             
             .nav-item.active {
-                font-size: 0.9rem;
+                font-size: 0.95rem;
             }
             
             .main-title {
@@ -657,7 +683,7 @@
                 padding: 0 15px 12px 15px;
             }
             
-            .faq-toggle {
+            .faq-toggle, .faq-hide-toggle {
                 font-size: 0.7rem;
             }
             
@@ -684,12 +710,12 @@
 
         @media (max-width: 480px) {
             .nav-item {
-                font-size: 0.65rem;
-                padding: 3px 6px;
+                font-size: 0.7rem;
+                padding: 4px 8px;
             }
             
             .nav-item.active {
-                font-size: 0.8rem;
+                font-size: 0.85rem;
             }
         }
     </style>
@@ -944,18 +970,22 @@
                 
                 let processedQuestion = item.question;
                 processedQuestion = processedQuestion.replace(/«([^»]+)»/g, '<span class="bold-quote">«$1»</span>');
+                processedQuestion = processedQuestion.replace(/@(Nerix_CM)/g, '<span class="admin-name">@$1</span>');
                 
                 let processedAnswer = item.answer;
                 processedAnswer = processedAnswer.replace(/«([^»]+)»/g, '<span class="bold-quote">«$1»</span>');
-                processedAnswer = processedAnswer.replace(/@([^\s]+)/g, '<span class="bold-quote">@$1</span>');
+                processedAnswer = processedAnswer.replace(/@(Nerix_CM)/g, '<span class="admin-name">@$1</span>');
+                processedAnswer = processedAnswer.replace(/«Модератор»/g, '<span class="role-moderator">«Модератор»</span>');
+                processedAnswer = processedAnswer.replace(/«Бета-тестер»/g, '<span class="role-beta">«Бета-тестер»</span>');
                 
                 faqItem.innerHTML = `
                     <div class="faq-question" data-index="${index}">
-                        <span class="question-text">❓ ${processedQuestion}</span>
-                        <span class="faq-toggle">▼ Показать ответ</span>
+                        <div class="question-text">❓ ${processedQuestion}</div>
+                        <div class="faq-toggle">▼ Показать ответ</div>
                     </div>
                     <div class="faq-answer" id="faq-answer-${index}" style="display: none;">
                         ${processedAnswer}
+                        <div class="faq-hide-toggle">▲ Скрыть ответ</div>
                     </div>
                 `;
                 
@@ -963,17 +993,26 @@
             });
             
             document.querySelectorAll('.faq-question').forEach(question => {
-                question.addEventListener('click', () => {
-                    const index = question.getAttribute('data-index');
-                    const answer = document.getElementById(`faq-answer-${index}`);
-                    const toggle = question.querySelector('.faq-toggle');
+                const index = question.getAttribute('data-index');
+                const answer = document.getElementById(`faq-answer-${index}`);
+                const toggle = question.querySelector('.faq-toggle');
+                
+                const hideToggle = answer ? answer.querySelector('.faq-hide-toggle') : null;
+                
+                if (hideToggle) {
+                    hideToggle.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        answer.style.display = 'none';
+                        if (toggle) toggle.style.display = 'block';
+                    });
+                }
+                
+                question.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('faq-hide-toggle')) return;
                     
                     if (answer.style.display === 'none') {
+                        if (toggle) toggle.style.display = 'none';
                         answer.style.display = 'block';
-                        toggle.innerHTML = '▲ Скрыть ответ';
-                    } else {
-                        answer.style.display = 'none';
-                        toggle.innerHTML = '▼ Показать ответ';
                     }
                 });
             });
