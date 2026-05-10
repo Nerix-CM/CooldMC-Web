@@ -64,9 +64,26 @@
             left: 20px;
             right: 20px;
             display: flex;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
+            overflow-x: auto;
             gap: 10px;
             z-index: 10;
+            scrollbar-width: thin;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .nav-menu::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .nav-menu::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 2px;
+        }
+
+        .nav-menu::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
         }
 
         .nav-item {
@@ -81,6 +98,7 @@
             backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .nav-item.active {
@@ -407,7 +425,7 @@
             color: white;
         }
 
-        /* Стили для FAQ */
+        /* Стили для FAQ с анимацией */
         .faq-list {
             display: flex;
             flex-direction: column;
@@ -433,10 +451,12 @@
             padding: 15px 20px;
             cursor: pointer;
             user-select: none;
+            transition: background-color 0.2s ease;
         }
 
         .faq-question:hover {
             color: white;
+            background-color: rgba(255, 255, 255, 0.05);
         }
 
         .faq-question .question-text .bold-quote {
@@ -471,11 +491,25 @@
             color: #AAAAAA;
         }
 
+        .faq-answer-wrapper {
+            display: block;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, opacity 0.3s ease-out;
+        }
+
+        .faq-answer-wrapper.open {
+            max-height: 500px;
+            opacity: 1;
+            transition: max-height 0.5s ease-in, opacity 0.4s ease-in;
+        }
+
         .faq-answer {
             font-size: 1.1rem;
             color: #AAAAAA;
             line-height: 1.5;
-            padding: 0 20px 15px 20px;
+            padding: 0 20px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             margin-top: 8px;
         }
@@ -503,7 +537,7 @@
         .faq-hide-toggle {
             font-size: 0.85rem;
             color: #888888;
-            margin-top: 12px;
+            padding: 8px 20px 15px 20px;
             display: block;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -691,7 +725,6 @@
             
             .faq-answer {
                 font-size: 0.95rem;
-                padding: 0 15px 12px 15px;
             }
             
             .faq-toggle, .faq-hide-toggle {
@@ -984,8 +1017,10 @@
                         <div class="question-text">${processedQuestion}</div>
                         <div class="faq-toggle">▼ Показать ответ</div>
                     </div>
-                    <div class="faq-answer" id="faq-answer-${index}" style="display: none;">
-                        ${processedAnswer}
+                    <div class="faq-answer-wrapper" id="faq-answer-wrapper-${index}">
+                        <div class="faq-answer">
+                            ${processedAnswer}
+                        </div>
                         <div class="faq-hide-toggle">▲ Скрыть ответ</div>
                     </div>
                 `;
@@ -995,25 +1030,25 @@
             
             document.querySelectorAll('.faq-question').forEach(question => {
                 const index = question.getAttribute('data-index');
-                const answer = document.getElementById(`faq-answer-${index}`);
+                const wrapper = document.getElementById(`faq-answer-wrapper-${index}`);
                 const toggle = question.querySelector('.faq-toggle');
                 
-                const hideToggle = answer ? answer.querySelector('.faq-hide-toggle') : null;
+                const hideToggle = wrapper ? wrapper.querySelector('.faq-hide-toggle') : null;
                 
                 if (hideToggle) {
                     hideToggle.addEventListener('click', (e) => {
                         e.stopPropagation();
-                        answer.style.display = 'none';
-                        if (toggle) toggle.style.display = 'block';
+                        wrapper.classList.remove('open');
+                        if (toggle) toggle.style.display = 'inline-block';
                     });
                 }
                 
                 question.addEventListener('click', (e) => {
                     if (e.target === hideToggle || (hideToggle && hideToggle.contains(e.target))) return;
                     
-                    if (answer.style.display === 'none') {
+                    if (!wrapper.classList.contains('open')) {
                         if (toggle) toggle.style.display = 'none';
-                        answer.style.display = 'block';
+                        wrapper.classList.add('open');
                     }
                 });
             });
