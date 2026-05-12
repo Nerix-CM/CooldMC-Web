@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CooldMC - Сервер Minecraft</title>
+    
+    <!-- Фавиконки -->
+    <link rel="icon" type="image/png" href="photos/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="photos/favicon.svg" />
+    <link rel="shortcut icon" href="photos/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="photos/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="CooldMC" />
+    <link rel="manifest" href="photos/site.webmanifest" />
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Боковое меню (для ПК и мобильных) -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-content">
+            <div class="sidebar-header">
+                <!-- Три полоски для мобильной версии -->
+                <div class="menu-icon" id="menuIcon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <!-- Иконка сервера -->
+                <img src="photos/web-app-manifest-192x192.png" alt="CooldMC" class="server-icon">
+                <!-- Название сервера (показывается при наведении на ПК и в мобильном меню) -->
+                <div class="sidebar-title">
+                    <span class="blue">Coold</span><span class="red">MC</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-link active" data-icon="⌂">
+                    <span class="nav-icon">⌂</span>
+                    <span class="nav-text">Главная</span>
+                </a>
+                <a href="#" class="nav-link" data-icon="👤">
+                    <span class="nav-icon">👤</span>
+                    <span class="nav-text">Игроки</span>
+                </a>
+                <a href="#" class="nav-link" data-icon="📋">
+                    <span class="nav-icon">📋</span>
+                    <span class="nav-text">Правила</span>
+                </a>
+                <a href="#" class="nav-link" data-icon="📄">
+                    <span class="nav-icon">📄</span>
+                    <span class="nav-text">Функции</span>
+                </a>
+                <a href="#" class="nav-link" data-icon="?">
+                    <span class="nav-icon">?</span>
+                    <span class="nav-text">FAQ</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="main-content">
+        <div class="container">
+            <!-- Левая часть (1/3 экрана) -->
+            <div class="left-section">
+                <h2 class="welcome-title">Добро пожаловать!</h2>
+                <div class="server-name">
+                    <span class="blue">Coold</span><span class="red">MC</span>
+                </div>
+                <p class="description">
+                    Здесь нет привата и особых привилегий, только честная игра и приятное общение. 
+                    Мы используем только дружелюбные к ваниле плагины, чтобы сохранить атмосферу оригинальной игры.
+                </p>
+                
+                <!-- Статус сервера -->
+                <div class="server-status">
+                    <div class="status-dot" id="status-dot"></div>
+                    <div class="status-text" id="status-text">Загрузка...</div>
+                </div>
+            </div>
+            
+            <!-- Правая часть (2/3 экрана) -->
+            <div class="right-section">
+                <!-- Здесь будет карта мира или другой контент -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
