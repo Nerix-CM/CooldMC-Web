@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CooldMC - Сервер Minecraft</title>
+    
+    <!-- Фавиконки -->
+    <link rel="icon" type="image/png" href="photos/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="photos/favicon.svg" />
+    <link rel="shortcut icon" href="photos/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="photos/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="CooldMC" />
+    <link rel="manifest" href="photos/site.webmanifest" />
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Боковое меню (для ПК) -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-content">
+            <div class="sidebar-header">
+                <img src="photos/web-app-manifest-192x192.png" alt="CooldMC" class="server-icon">
+                <div class="sidebar-title">
+                    <span class="blue">Coold</span><span class="red">MC</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-link active" data-page="home">
+                    <img src="photos/home_icon.png" alt="Главная" class="nav-icon">
+                    <span class="nav-text">Главная</span>
+                </a>
+                <a href="#" class="nav-link" data-page="players">
+                    <img src="photos/players_icon.png" alt="Игроки" class="nav-icon">
+                    <span class="nav-text">Игроки</span>
+                </a>
+                <a href="#" class="nav-link" data-page="rules">
+                    <img src="photos/rules_icon.png" alt="Правила" class="nav-icon">
+                    <span class="nav-text">Правила</span>
+                </a>
+                <a href="#" class="nav-link" data-page="functions">
+                    <img src="photos/function_icon.png" alt="Функции" class="nav-icon">
+                    <span class="nav-text">Функции</span>
+                </a>
+                <a href="#" class="nav-link" data-page="news">
+                    <img src="photos/news_icon.png" alt="Новости" class="nav-icon">
+                    <span class="nav-text">Новости</span>
+                </a>
+                <a href="#" class="nav-link" data-page="faq">
+                    <img src="photos/faq_icon.png" alt="FAQ" class="nav-icon">
+                    <span class="nav-text">FAQ</span>
+                </a>
+                <a href="#" class="nav-link" data-page="map">
+                    <img src="photos/map_icon.png" alt="Карта" class="nav-icon">
+                    <span class="nav-text">Карта</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Мобильная верхняя панель -->
+    <div class="mobile-top-bar" id="mobileTopBar">
+        <div class="menu-icon" id="menuIcon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <img src="photos/web-app-manifest-192x192.png" alt="CooldMC" class="mobile-top-icon">
+        <div class="mobile-top-title">
+            <span class="blue">Coold</span><span class="red">MC</span>
+        </div>
+    </div>
+
+    <!-- Мобильное полноэкранное меню -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+        <div class="mobile-menu">
+            <div class="mobile-menu-header">
+                <div class="mobile-close" id="mobileCloseBtn">✕</div>
+            </div>
+            <img src="photos/web-app-manifest-192x192.png" alt="CooldMC" class="mobile-server-icon">
+            <div class="mobile-menu-title">
+                <span class="blue">Coold</span><span class="red">MC</span>
+            </div>
+            <nav class="mobile-nav">
+                <a href="#" class="mobile-nav-link active" data-page="home">
+                    <img src="photos/home_icon.png" alt="Главная" class="mobile-nav-icon">
+                    <span>Главная</span>
+                </a>
+                <a href="#" class="mobile-nav-link" data-page="players">
+                    <img src="photos/players_icon.png" alt="Игроки" class="mobile-nav-icon">
+                    <span>Игроки</span>
+                </a>
+                <a href="#" class="mobile-nav-link" data-page="rules">
+                    <img src="photos/rules_icon.png" alt="Правила" class="mobile-nav-icon">
+                    <span>Правила</span>
+                </a>
+                <a href="#" class="mobile-nav-link" data-page="functions">
+                    <img src="photos/function_icon.png" alt="Функции" class="mobile-nav-icon">
+                    <span>Функции</span>
+                </a>
+                <a href="#" class="mobile-nav-link" data-page="news">
+                    <img src="photos/news_icon.png" alt="Новости" class="mobile-nav-icon">
+                    <span>Новости</span>
+                </a>
+                <a href="#" class="mobile-nav-link" data-page="faq">
+                    <img src="photos/faq_icon.png" alt="FAQ" class="mobile-nav-icon">
+                    <span>FAQ</span>
+                </a>
+                <a href="#" class="mobile-nav-link" data-page="map">
+                    <img src="photos/map_icon.png" alt="Карта" class="mobile-nav-icon">
+                    <span>Карта</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="main-content">
+        <div class="container">
+            <div class="left-section">
+                <div class="content-card">
+                    <h2 class="welcome-title">Добро пожаловать!</h2>
+                    <div class="server-name">
+                        <span class="blue">Coold</span><span class="red">MC</span>
+                    </div>
+                    <p class="description">
+                        Здесь нет привата и особых привилегий, только честная игра и приятное общение. 
+                        Мы используем только дружелюбные к ваниле плагины, чтобы сохранить атмосферу оригинальной игры.
+                    </p>
+                    
+                    <div class="server-status">
+                        <div class="status-dot" id="status-dot"></div>
+                        <div class="status-text" id="status-text">Загрузка...</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="right-section">
+                <!-- Сюда будет загружаться контент вкладок -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Подключение скриптов (в правильном порядке!) -->
+    <script src="script.js"></script>
+    <script src="players.js"></script>
+    <script src="rules.js"></script>
+    <script src="functions.js"></script>
+    <script src="news.js"></script>
+    <script src="faq.js"></script>
+    <script src="snow.js"></script>
+</body>
+</html>
