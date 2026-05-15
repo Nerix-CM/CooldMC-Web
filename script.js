@@ -101,16 +101,48 @@ function sortPlayersByRoleAndDays(players) {
     });
 }
 
+// Управление видимостью левой секции (только на телефоне, только на не-главных страницах)
+function toggleLeftSectionMobile(showOnMobile) {
+    const leftSection = document.querySelector('.left-section');
+    if (leftSection) {
+        if (window.innerWidth <= 768) {
+            // На телефоне: скрываем на всех вкладках, кроме главной
+            leftSection.style.display = showOnMobile ? 'flex' : 'none';
+        } else {
+            // На ПК: всегда показываем
+            leftSection.style.display = 'flex';
+        }
+    }
+}
+
+// Прокрутка страницы вверх
+function scrollToTop() {
+    // Прокручиваем основное окно
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+    // Прокручиваем контейнер с контентом
+    const rightSection = document.querySelector('.right-section');
+    if (rightSection) {
+        rightSection.scrollTop = 0;
+    }
+}
+
 // Отображение страниц
 function renderHomePage() {
+    toggleLeftSectionMobile(true); // На телефоне показываем блок
     renderLatestNewsOnHome();
+    scrollToTop();
 }
 
 function renderPlayersPage() {
+    toggleLeftSectionMobile(false); // На телефоне скрываем блок
     const rightSection = document.querySelector('.right-section');
     if (rightSection) {
         if (typeof playersData === 'undefined') {
             rightSection.innerHTML = '<div class="error-message">Ошибка загрузки данных игроков</div>';
+            scrollToTop();
             return;
         }
         
@@ -148,13 +180,16 @@ function renderPlayersPage() {
         html += '</div>';
         rightSection.innerHTML = html;
     }
+    scrollToTop();
 }
 
 function renderRulesPage() {
+    toggleLeftSectionMobile(false);
     const rightSection = document.querySelector('.right-section');
     if (rightSection) {
         if (typeof rulesData === 'undefined') {
             rightSection.innerHTML = '<div class="error-message">Ошибка загрузки правил</div>';
+            scrollToTop();
             return;
         }
         
@@ -174,13 +209,16 @@ function renderRulesPage() {
         html += '</div>';
         rightSection.innerHTML = html;
     }
+    scrollToTop();
 }
 
 function renderFunctionsPage() {
+    toggleLeftSectionMobile(false);
     const rightSection = document.querySelector('.right-section');
     if (rightSection) {
         if (typeof functionsData === 'undefined' || typeof modsData === 'undefined') {
             rightSection.innerHTML = '<div class="error-message">Ошибка загрузки функций</div>';
+            scrollToTop();
             return;
         }
         
@@ -215,14 +253,17 @@ function renderFunctionsPage() {
         html += '</div></div>';
         rightSection.innerHTML = html;
     }
+    scrollToTop();
 }
 
 // Функция для отображения всех новостей
 function renderAllNewsPage() {
+    toggleLeftSectionMobile(false);
     const rightSection = document.querySelector('.right-section');
     if (rightSection) {
         if (typeof newsData === 'undefined') {
             rightSection.innerHTML = '<div class="error-message">Ошибка загрузки новостей</div>';
+            scrollToTop();
             return;
         }
         
@@ -253,6 +294,7 @@ function renderAllNewsPage() {
         html += '</div>';
         rightSection.innerHTML = html;
     }
+    scrollToTop();
 }
 
 // Функция для отображения последней новости на главной
@@ -311,10 +353,12 @@ function renderLatestNewsOnHome() {
 }
 
 function renderFaqPage() {
+    toggleLeftSectionMobile(false);
     const rightSection = document.querySelector('.right-section');
     if (rightSection) {
         if (typeof faqData === 'undefined') {
             rightSection.innerHTML = '<div class="error-message">Ошибка загрузки FAQ</div>';
+            scrollToTop();
             return;
         }
         
@@ -369,6 +413,7 @@ function renderFaqPage() {
             });
         });
     }
+    scrollToTop();
 }
 
 // Переключение страниц
@@ -525,6 +570,16 @@ document.addEventListener('DOMContentLoaded', () => {
         case 'faq': renderFaqPage(); break;
         default: renderHomePage();
     }
+    
+    // При изменении размера окна обновляем видимость блока
+    window.addEventListener('resize', () => {
+        const currentPage = getPageFromURL();
+        if (currentPage === 'home') {
+            toggleLeftSectionMobile(true);
+        } else {
+            toggleLeftSectionMobile(false);
+        }
+    });
     
     setInterval(fetchServerStatus, 30000);
 });
