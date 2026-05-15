@@ -890,14 +890,79 @@ body {
     font-size: 1.2rem;
 }
 
+/* Стили для страницы установки скина */
+.skin-redirect {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+    border-radius: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    max-width: 500px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.skin-icon-large {
+    font-size: 5rem;
+    margin-bottom: 20px;
+}
+
+.skin-title {
+    font-size: 2rem;
+    color: #5555FF;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.skin-description {
+    font-size: 1rem;
+    color: #DDDDDD;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.skin-command {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-family: monospace;
+    color: #55FF55;
+}
+
+.skin-button {
+    display: inline-block;
+    background: linear-gradient(135deg, #5555FF, #3333CC);
+    color: white;
+    text-decoration: none;
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.skin-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(85, 85, 255, 0.5);
+}
+
+.skin-note {
+    font-size: 0.85rem;
+    color: #AAAAAA;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 /* ===== МОБИЛЬНАЯ ВЕРСИЯ ===== */
 @media (max-width: 768px) {
-    /* Скрываем ПК меню */
     .sidebar {
         display: none;
     }
     
-    /* Показываем мобильную верхнюю панель */
     .mobile-top-bar {
         display: flex;
     }
@@ -917,7 +982,7 @@ body {
         padding-top: 80px;
         gap: 20px;
         align-items: flex-start;
-        justify-content: flex-start;
+        justify-content: center;
         min-height: 100vh;
     }
     
@@ -925,7 +990,7 @@ body {
         max-width: 100%;
         width: 100%;
         align-items: flex-start;
-        justify-content: flex-start;
+        justify-content: center;
     }
     
     .content-card {
@@ -935,22 +1000,22 @@ body {
     }
     
     .welcome-title {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
         white-space: normal;
     }
     
     .server-name {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
     
     .description {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
     }
     
     .right-section {
+        min-height: 200px;
         width: 100%;
         max-height: none;
-        padding-right: 0;
     }
     
     .server-status {
@@ -964,6 +1029,10 @@ body {
     
     .player-stats {
         text-align: center;
+    }
+    
+    .functions-container {
+        padding: 0;
     }
     
     .function-item {
@@ -1009,6 +1078,23 @@ body {
     .latest-news-image img {
         max-height: 150px;
     }
+    
+    .skin-redirect {
+        padding: 25px 15px;
+    }
+    
+    .skin-title {
+        font-size: 1.5rem;
+    }
+    
+    .skin-description {
+        font-size: 0.85rem;
+    }
+    
+    .skin-button {
+        padding: 10px 20px;
+        font-size: 0.95rem;
+    }
 }
 
 @media (max-width: 600px) {
@@ -1022,17 +1108,17 @@ body {
     }
     
     .welcome-title {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         margin-bottom: 12px;
     }
     
     .server-name {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
         margin-bottom: 12px;
     }
     
     .description {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
         margin-bottom: 15px;
     }
     
@@ -1042,7 +1128,7 @@ body {
     }
     
     .status-text {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
     }
     
     .mobile-top-icon {
@@ -1076,18 +1162,6 @@ body {
         width: 24px;
         height: 24px;
     }
-    
-    .player-name {
-        font-size: 1.3rem;
-    }
-    
-    .rules-title {
-        font-size: 1.3rem;
-    }
-    
-    .rules-subrule {
-        font-size: 1rem;
-    }
 }
 
 @media (max-width: 480px) {
@@ -1101,15 +1175,15 @@ body {
     }
     
     .welcome-title {
-        font-size: 1.3rem;
+        font-size: 1.1rem;
     }
     
     .server-name {
-        font-size: 1.4rem;
+        font-size: 1.3rem;
     }
     
     .description {
-        font-size: 0.7rem;
+        font-size: 0.65rem;
     }
     
     .mobile-top-icon {
@@ -1142,18 +1216,6 @@ body {
     .mobile-nav-icon {
         width: 22px;
         height: 22px;
-    }
-    
-    .player-name {
-        font-size: 1.2rem;
-    }
-    
-    .player-role {
-        font-size: 0.8rem;
-    }
-    
-    .player-join-date, .player-days {
-        font-size: 0.7rem;
     }
     
     .mod-card {
