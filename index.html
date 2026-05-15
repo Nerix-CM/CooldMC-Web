@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>CooldMC - Сервер Minecraft</title>
     
     <!-- Фавиконки -->
@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Боковое меню (для ПК) -->
+    <!-- Боковое меню (ПК) -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-content">
             <div class="sidebar-header">
@@ -59,11 +59,19 @@
                     <span class="nav-text">Установка скина</span>
                 </a>
             </nav>
+            <!-- Переключатель эффектов внизу -->
+            <div class="effect-switcher">
+                <div class="effect-switch">
+                    <button class="effect-option active" data-effect="snow">Снег</button>
+                    <button class="effect-option" data-effect="leaves">Листья</button>
+                    <button class="effect-option" data-effect="none">Выкл</button>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Мобильная верхняя панель -->
-    <div class="mobile-top-bar" id="mobileTopBar">
+    <div class="mobile-top-bar">
         <div class="menu-icon" id="menuIcon">
             <span></span>
             <span></span>
@@ -75,7 +83,7 @@
         </div>
     </div>
 
-    <!-- Мобильное полноэкранное меню -->
+    <!-- Мобильное меню -->
     <div class="mobile-menu-overlay" id="mobileMenuOverlay">
         <div class="mobile-menu">
             <div class="mobile-menu-header">
@@ -119,6 +127,14 @@
                     <span>Установка скина</span>
                 </a>
             </nav>
+            <!-- Мобильный переключатель эффектов -->
+            <div class="mobile-effect-switcher">
+                <div class="mobile-effect-switch">
+                    <button class="mobile-effect-option active" data-effect="snow">Снег</button>
+                    <button class="mobile-effect-option" data-effect="leaves">Листья</button>
+                    <button class="mobile-effect-option" data-effect="none">Выкл</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -149,7 +165,6 @@
         </div>
     </div>
 
-    <!-- Подключение скриптов (в правильном порядке!) -->
     <script src="script.js"></script>
     <script src="players.js"></script>
     <script src="rules.js"></script>
@@ -157,5 +172,6 @@
     <script src="news.js"></script>
     <script src="faq.js"></script>
     <script src="snow.js"></script>
+    <script src="leaves.js"></script>
 </body>
 </html>
