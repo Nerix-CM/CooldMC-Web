@@ -429,7 +429,7 @@ body {
     border-radius: 3px;
 }
 
-/* ===== СТИЛИ ДЛЯ ПРАВОЙ СЕКЦИИ (КОНТЕНТ ВКЛАДОК) ===== */
+/* ===== СТИЛИ ДЛЯ ПРАВОЙ СЕКЦИИ ===== */
 .players-container {
     display: flex;
     flex-direction: column;
@@ -582,4 +582,590 @@ body {
 .mods-title {
     font-size: 1.8rem;
     color: white;
-    text-shadow: 2px 2px
+    text-shadow: 2px 2px 0px #2a2a2a;
+    margin: 20px 0 20px 0;
+    text-align: left;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    padding-bottom: 10px;
+}
+
+.mods-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.mod-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(3px);
+    border-radius: 12px;
+    padding: 12px 20px;
+    border-left: 4px solid #5555FF;
+    gap: 15px;
+    transition: all 0.3s ease;
+}
+
+.mod-card:hover {
+    transform: scale(1.01);
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.mod-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    flex: 1;
+}
+
+.mod-type {
+    font-size: 0.85rem;
+    color: #5555FF;
+}
+
+.mod-name {
+    font-size: 1.1rem;
+    color: white;
+}
+
+.download-btn {
+    background-color: #55FF55;
+    color: #000000;
+    text-decoration: none;
+    padding: 6px 18px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    font-family: 'Minecraft', 'Press Start 2P', monospace;
+    flex-shrink: 0;
+}
+
+.download-btn:hover {
+    background-color: #33CC33;
+    transform: scale(1.05);
+}
+
+/* Стили для новостей */
+.news-container {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 100%;
+}
+
+.news-card {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.news-card:hover {
+    transform: scale(1.02);
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.news-title {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #5555FF;
+    margin-bottom: 12px;
+}
+
+.news-divider {
+    height: 2px;
+    background: linear-gradient(90deg, #5555FF, transparent);
+    margin-bottom: 15px;
+}
+
+.news-image {
+    margin-bottom: 15px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.news-image img {
+    width: 100%;
+    max-height: 250px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.news-description {
+    font-size: 0.95rem;
+    color: #DDDDDD;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.news-date {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: #AAAAAA;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.news-date-icon {
+    font-size: 0.9rem;
+}
+
+.news-timeago {
+    color: #888888;
+}
+
+/* Последняя новость на главной */
+.latest-news-section {
+    width: 100%;
+}
+
+.latest-news-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.latest-news-icon {
+    font-size: 1.5rem;
+}
+
+.latest-news-title {
+    font-size: 1.2rem;
+    color: #FFAA55;
+    font-weight: bold;
+}
+
+.news-card.latest {
+    margin-bottom: 15px;
+}
+
+.latest-news-image {
+    margin-bottom: 15px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.latest-news-image img {
+    width: 100%;
+    max-height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.all-news-link {
+    text-align: center;
+    margin-top: 5px;
+}
+
+.all-news-btn {
+    display: inline-block;
+    padding: 8px 20px;
+    background-color: rgba(85, 85, 255, 0.2);
+    color: #5555FF;
+    text-decoration: none;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(85, 85, 255, 0.3);
+}
+
+.all-news-btn:hover {
+    background-color: rgba(85, 85, 255, 0.4);
+    transform: scale(1.05);
+}
+
+/* Стили для FAQ */
+.faq-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.faq-item {
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(3px);
+    border-radius: 12px;
+    border-left: 4px solid #5555FF;
+    overflow: hidden;
+}
+
+.faq-question {
+    padding: 15px 20px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.faq-question:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.faq-question-text {
+    font-size: 1.2rem;
+    color: #DDDDDD;
+}
+
+.faq-question-text .bold-quote {
+    font-weight: bold;
+    color: #FFAA55;
+}
+
+.faq-question-text .admin-name {
+    color: #5555FF;
+    font-weight: bold;
+}
+
+.faq-toggle {
+    font-size: 0.8rem;
+    color: #888888;
+    margin-top: 8px;
+    display: inline-block;
+}
+
+.faq-answer {
+    padding: 0 20px 15px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: none;
+}
+
+.faq-answer-text {
+    font-size: 1rem;
+    color: #AAAAAA;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.faq-answer-text .bold-quote {
+    font-weight: bold;
+    color: #FFAA55;
+}
+
+.faq-answer-text .admin-name {
+    color: #5555FF;
+    font-weight: bold;
+}
+
+.faq-answer-text .role-moderator {
+    color: #5555FF;
+    font-weight: bold;
+}
+
+.faq-answer-text .role-beta {
+    color: #FFFF55;
+    font-weight: bold;
+}
+
+.faq-hide-toggle {
+    font-size: 0.8rem;
+    color: #888888;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.faq-hide-toggle:hover {
+    color: #AAAAAA;
+}
+
+.error-message {
+    color: #FF5555;
+    text-align: center;
+    padding: 40px;
+    font-size: 1.2rem;
+}
+
+.right-placeholder {
+    color: rgba(255, 255, 255, 0.3);
+    text-align: center;
+    padding: 40px;
+    font-size: 1.2rem;
+}
+
+/* ===== МОБИЛЬНАЯ ВЕРСИЯ ===== */
+@media (max-width: 768px) {
+    /* Скрываем ПК меню */
+    .sidebar {
+        display: none;
+    }
+    
+    /* Показываем мобильную верхнюю панель */
+    .mobile-top-bar {
+        display: flex;
+    }
+    
+    .menu-icon {
+        display: flex;
+    }
+    
+    .main-content {
+        margin-left: 0;
+        padding-top: 0;
+    }
+    
+    .container {
+        flex-direction: column;
+        padding: 20px;
+        padding-top: 80px;
+        gap: 20px;
+        align-items: flex-start;
+        justify-content: flex-start;
+        min-height: 100vh;
+    }
+    
+    .left-section {
+        max-width: 100%;
+        width: 100%;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+    
+    .content-card {
+        padding: 25px;
+        text-align: left;
+        width: 100%;
+    }
+    
+    .welcome-title {
+        font-size: 1.8rem;
+        white-space: normal;
+    }
+    
+    .server-name {
+        font-size: 2rem;
+    }
+    
+    .description {
+        font-size: 0.9rem;
+    }
+    
+    .right-section {
+        width: 100%;
+        max-height: none;
+        padding-right: 0;
+    }
+    
+    .server-status {
+        justify-content: flex-start;
+    }
+    
+    .player-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .player-stats {
+        text-align: center;
+    }
+    
+    .function-item {
+        font-size: 0.9rem;
+    }
+    
+    .faq-question-text {
+        font-size: 1rem;
+    }
+    
+    .faq-answer-text {
+        font-size: 0.9rem;
+    }
+    
+    .mod-card {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+        flex-wrap: wrap;
+    }
+    
+    .mod-info {
+        text-align: left;
+        flex: 1;
+    }
+    
+    .download-btn {
+        flex-shrink: 0;
+    }
+    
+    .news-title {
+        font-size: 1.2rem;
+    }
+    
+    .news-description {
+        font-size: 0.85rem;
+    }
+    
+    .news-image img {
+        max-height: 180px;
+    }
+    
+    .latest-news-image img {
+        max-height: 150px;
+    }
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 15px;
+        padding-top: 75px;
+    }
+    
+    .content-card {
+        padding: 20px;
+    }
+    
+    .welcome-title {
+        font-size: 1.5rem;
+        margin-bottom: 12px;
+    }
+    
+    .server-name {
+        font-size: 1.6rem;
+        margin-bottom: 12px;
+    }
+    
+    .description {
+        font-size: 0.8rem;
+        margin-bottom: 15px;
+    }
+    
+    .server-status {
+        padding: 6px 12px;
+        gap: 10px;
+    }
+    
+    .status-text {
+        font-size: 0.85rem;
+    }
+    
+    .mobile-top-icon {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .mobile-top-title {
+        font-size: 1rem;
+    }
+    
+    .mobile-menu-overlay {
+        width: 70%;
+    }
+    
+    .mobile-server-icon {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .mobile-menu-title {
+        font-size: 1.4rem;
+    }
+    
+    .mobile-nav-link {
+        font-size: 1rem;
+        padding: 10px 12px;
+    }
+    
+    .mobile-nav-icon {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .player-name {
+        font-size: 1.3rem;
+    }
+    
+    .rules-title {
+        font-size: 1.3rem;
+    }
+    
+    .rules-subrule {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 12px;
+        padding-top: 70px;
+    }
+    
+    .content-card {
+        padding: 15px;
+    }
+    
+    .welcome-title {
+        font-size: 1.3rem;
+    }
+    
+    .server-name {
+        font-size: 1.4rem;
+    }
+    
+    .description {
+        font-size: 0.7rem;
+    }
+    
+    .mobile-top-icon {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .mobile-top-title {
+        font-size: 0.9rem;
+    }
+    
+    .mobile-menu-overlay {
+        width: 80%;
+    }
+    
+    .mobile-server-icon {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .mobile-menu-title {
+        font-size: 1.2rem;
+    }
+    
+    .mobile-nav-link {
+        font-size: 0.9rem;
+        padding: 8px 10px;
+    }
+    
+    .mobile-nav-icon {
+        width: 22px;
+        height: 22px;
+    }
+    
+    .player-name {
+        font-size: 1.2rem;
+    }
+    
+    .player-role {
+        font-size: 0.8rem;
+    }
+    
+    .player-join-date, .player-days {
+        font-size: 0.7rem;
+    }
+    
+    .mod-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .mod-info {
+        text-align: center;
+    }
+    
+    .download-btn {
+        align-self: center;
+    }
+}
