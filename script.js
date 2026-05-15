@@ -470,42 +470,6 @@ function switchPage(pageId) {
         return;
     }
     
-    window.location.hash = pageId;
-    updateActivePage(pageId);
-    
-    switch(pageId) {
-        case 'home':
-            renderHomePage();
-            break;
-        case 'players':
-            renderPlayersPage();
-            break;
-        case 'rules':
-            renderRulesPage();
-            break;
-        case 'functions':
-            renderFunctionsPage();
-            break;
-        case 'news':
-            renderAllNewsPage();
-            break;
-        case 'faq':
-            renderFaqPage();
-            break;
-        case 'skin':
-            renderSkinPage();
-            break;
-        default:
-            renderHomePage();
-    }
-}
-
-function switchPage(pageId) {
-    if (pageId === 'map') {
-        window.open('http://188.127.241.222:25729', '_blank');
-        return;
-    }
-    
     if (pageId === 'skin') {
         window.open('https://skinsrestorer.net/upload', '_blank');
         return;
