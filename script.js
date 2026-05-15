@@ -500,52 +500,42 @@ function switchPage(pageId) {
     }
 }
 
-function setupPageSwitching() {
-    const navLinks = document.querySelectorAll('.nav-link');
-    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+function switchPage(pageId) {
+    if (pageId === 'map') {
+        window.open('http://188.127.241.222:25729', '_blank');
+        return;
+    }
     
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const pageId = link.getAttribute('data-page');
-            switchPage(pageId);
-            
-            const mobileMenu = document.getElementById('mobileMenuOverlay');
-            if (mobileMenu && mobileMenu.classList.contains('open')) {
-                mobileMenu.classList.remove('open');
-            }
-        });
-    });
+    if (pageId === 'skin') {
+        window.open('https://skinsrestorer.net/upload', '_blank');
+        return;
+    }
     
-    mobileNavLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const pageId = link.getAttribute('data-page');
-            switchPage(pageId);
-            
-            const mobileMenu = document.getElementById('mobileMenuOverlay');
-            if (mobileMenu) {
-                mobileMenu.classList.remove('open');
-            }
-        });
-    });
+    window.location.hash = pageId;
+    updateActivePage(pageId);
     
-    window.addEventListener('hashchange', () => {
-        const pageId = getPageFromURL();
-        if (pageId !== 'map') {
-            updateActivePage(pageId);
-            switch(pageId) {
-                case 'home': renderHomePage(); break;
-                case 'players': renderPlayersPage(); break;
-                case 'rules': renderRulesPage(); break;
-                case 'functions': renderFunctionsPage(); break;
-                case 'news': renderAllNewsPage(); break;
-                case 'faq': renderFaqPage(); break;
-                case 'skin': renderSkinPage(); break;
-                default: renderHomePage();
-            }
-        }
-    });
+    switch(pageId) {
+        case 'home':
+            renderHomePage();
+            break;
+        case 'players':
+            renderPlayersPage();
+            break;
+        case 'rules':
+            renderRulesPage();
+            break;
+        case 'functions':
+            renderFunctionsPage();
+            break;
+        case 'news':
+            renderAllNewsPage();
+            break;
+        case 'faq':
+            renderFaqPage();
+            break;
+        default:
+            renderHomePage();
+    }
 }
 
 function setupMobileMenu() {
