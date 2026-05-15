@@ -21,7 +21,7 @@ class LeavesEffect {
         
         this.isActive = true;
         
-        this.createLeaves(40); // 70
+        this.createLeaves(35); // 70
         
         window.addEventListener('resize', () => this.resize());
         this.animate();
