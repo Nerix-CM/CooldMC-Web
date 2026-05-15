@@ -1,5 +1,35 @@
 // script.js - все скрипты для сайта
 
+// Управление эффектами
+let currentEffect = null;
+let snowEffect = null;
+let leavesEffect = null;
+
+function stopCurrentEffect() {
+    if (currentEffect) {
+        currentEffect.stop();
+        currentEffect = null;
+    }
+}
+
+function startSnowEffect() {
+    stopCurrentEffect();
+    if (!snowEffect) {
+        snowEffect = new SnowEffect();
+    }
+    snowEffect.init();
+    currentEffect = snowEffect;
+}
+
+function startLeavesEffect() {
+    stopCurrentEffect();
+    if (!leavesEffect) {
+        leavesEffect = new LeavesEffect();
+    }
+    leavesEffect.init();
+    currentEffect = leavesEffect;
+}
+
 // Функция получения статуса сервера
 async function fetchServerStatus() {
     const statusDot = document.getElementById('status-dot');
@@ -101,7 +131,7 @@ function sortPlayersByRoleAndDays(players) {
     });
 }
 
-// Управление видимостью левой секции (только на телефоне, только на не-главных страницах)
+// Управление видимостью левой секции
 function toggleLeftSectionMobile(showOnMobile) {
     const leftSection = document.querySelector('.left-section');
     if (leftSection) {
@@ -410,6 +440,30 @@ function renderFaqPage() {
     scrollToTop();
 }
 
+function renderSkinPage() {
+    toggleLeftSectionMobile(false);
+    const rightSection = document.querySelector('.right-section');
+    if (rightSection) {
+        rightSection.innerHTML = `
+            <div class="skin-redirect">
+                <div class="skin-icon-large">🎨</div>
+                <div class="skin-title">Установка скина</div>
+                <div class="skin-description">
+                    Нажмите на кнопку ниже, чтобы перейти на сайт для загрузки скина.
+                    После загрузки скина, введите команду <span class="skin-command">/skin <ваш_ник></span> на сервере.
+                </div>
+                <a href="https://skinsrestorer.net/upload" class="skin-button" target="_blank">
+                    Перейти к установке скина →
+                </a>
+                <div class="skin-note">
+                    💡 Поддерживаются скины Java Edition (64x64 или 128x128)
+                </div>
+            </div>
+        `;
+    }
+    scrollToTop();
+}
+
 // Переключение страниц
 function getPageFromURL() {
     const hash = window.location.hash.substring(1);
@@ -552,11 +606,58 @@ function setupMobileMenu() {
     });
 }
 
+function setupEffectSwitcher() {
+    const buttons = document.querySelectorAll('.effect-option');
+    const mobileButtons = document.querySelectorAll('.mobile-effect-option');
+    
+    function setActiveEffect(effectName) {
+        buttons.forEach(btn => {
+            if (btn.getAttribute('data-effect') === effectName) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+        mobileButtons.forEach(btn => {
+            if (btn.getAttribute('data-effect') === effectName) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+        
+        if (effectName === 'snow') {
+            startSnowEffect();
+        } else if (effectName === 'leaves') {
+            startLeavesEffect();
+        } else if (effectName === 'none') {
+            stopCurrentEffect();
+        }
+    }
+    
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const effect = btn.getAttribute('data-effect');
+            setActiveEffect(effect);
+        });
+    });
+    
+    mobileButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const effect = btn.getAttribute('data-effect');
+            setActiveEffect(effect);
+        });
+    });
+    
+    setActiveEffect('snow');
+}
+
 // Запуск при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
     fetchServerStatus();
     setupMobileMenu();
     setupPageSwitching();
+    setupEffectSwitcher();
     
     const initialPage = getPageFromURL();
     updateActivePage(initialPage);
@@ -568,7 +669,6 @@ document.addEventListener('DOMContentLoaded', () => {
         case 'news': renderAllNewsPage(); break;
         case 'faq': renderFaqPage(); break;
         case 'skin': 
-            // Если URL ведёт на skin, просто открываем ссылку
             window.open('https://skinsrestorer.net/upload', '_blank');
             window.location.hash = 'home';
             renderHomePage();
