@@ -225,15 +225,13 @@ function renderPlayersPage() {
             
             html += `
                 <div class="player-card">
-                    <div class="player-grid">
-                        <div class="player-left">
-                            <div class="player-name">${player.name}</div>
-                            ${roleText ? `<div class="player-role ${roleClass}">${roleText}</div>` : ''}
-                        </div>
-                        <div class="player-right">
-                            <div class="player-join-date">📅 ${formatDate(player.joinDate)}</div>
-                            <div class="player-days">⏱ ${daysOnServer} дн.</div>
-                        </div>
+                    <div class="player-info">
+                        <div class="player-name">${player.name}</div>
+                        ${roleText ? `<div class="player-role ${roleClass}">${roleText}</div>` : ''}
+                    </div>
+                    <div class="player-stats">
+                        <div class="player-join-date">📅 ${formatDate(player.joinDate)}</div>
+                        <div class="player-days">⏱ ${daysOnServer} дн.</div>
                     </div>
                 </div>
             `;
