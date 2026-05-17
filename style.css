@@ -526,7 +526,7 @@ body {
     border-radius: 3px;
 }
 
-/* ===== СТИЛИ ДЛЯ ПРАВОЙ СЕКЦИИ ===== */
+/* Стили для списка игроков */
 .players-container {
     display: flex;
     flex-direction: column;
@@ -539,11 +539,6 @@ body {
     backdrop-filter: blur(5px);
     border-radius: 15px;
     padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 15px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     transition: all 0.3s ease;
 }
@@ -553,23 +548,26 @@ body {
     background-color: rgba(0, 0, 0, 0.7);
 }
 
-.player-info {
+.player-grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    gap: 20px;
+}
+
+.player-left {
     display: flex;
-    align-items: center;
-    gap: 15px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 5px;
 }
 
 .player-name {
-    font-size: 1.5rem;
+    font-size: 2rem;
     color: white;
 }
 
 .player-role {
-    font-size: 1rem;
-    padding: 4px 10px;
-    border-radius: 20px;
-    background-color: rgba(0, 0, 0, 0.3);
+    font-size: 1.5rem;
 }
 
 /* Роли игроков */
@@ -609,19 +607,24 @@ body {
     color: #FFFF55;
 }
 
-.player-stats {
-    text-align: right;
+.player-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
 }
 
 .player-join-date {
     color: #AAAAAA;
-    font-size: 0.8rem;
+    font-size: 1rem;
+    white-space: nowrap;
 }
 
 .player-days {
     color: #55FF55;
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: bold;
+    white-space: nowrap;
 }
 
 /* Стили для правил */
