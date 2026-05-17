@@ -182,65 +182,58 @@ function renderPlayersPage() {
             return;
         }
         
+        const today = new Date().toISOString().split('T')[0];
         const sortedPlayers = sortPlayersByRoleAndDays(playersData);
+        
+        // Функция для получения текста роли
+        function getRoleText(role) {
+            switch(role) {
+                case 'gl_admin': return 'ГЛ.Администратор';
+                case 'admin': return 'Администратор';
+                case 'gl_moderator': return 'ГЛ.Модератор';
+                case 'st_moderator': return 'СТ.Модератор';
+                case 'moderator': return 'Модератор';
+                case 'gl_helper': return 'ГЛ.Хелпер';
+                case 'st_helper': return 'СТ.Хелпер';
+                case 'helper': return 'Хелпер';
+                case 'beta': return 'Бета-тестер';
+                default: return null;
+            }
+        }
+        
+        // Функция для получения класса роли
+        function getRoleClass(role) {
+            switch(role) {
+                case 'gl_admin': return 'role-gl_admin';
+                case 'admin': return 'role-admin';
+                case 'gl_moderator': return 'role-gl_moderator';
+                case 'st_moderator': return 'role-st_moderator';
+                case 'moderator': return 'role-moderator';
+                case 'gl_helper': return 'role-gl_helper';
+                case 'st_helper': return 'role-st_helper';
+                case 'helper': return 'role-helper';
+                case 'beta': return 'role-beta';
+                default: return null;
+            }
+        }
         
         let html = '<div class="players-container">';
         sortedPlayers.forEach(player => {
-            const daysOnServer = getDaysBetween(player.joinDate, new Date().toISOString().split('T')[0]);
-            let roleClass = '';
-            let roleHtml = '';
-            
-            // Определяем класс и текст роли
-            switch(player.role) {
-                case 'gl_admin':
-                    roleClass = 'role-gl_admin';
-                    roleHtml = `<span class="player-role ${roleClass}">${player.roleText}</span>`;
-                    break;
-                case 'admin':
-                    roleClass = 'role-admin';
-                    roleHtml = `<span class="player-role ${roleClass}">${player.roleText}</span>`;
-                    break;
-                case 'gl_moderator':
-                    roleClass = 'role-gl_moderator';
-                    roleHtml = `<span class="player-role ${roleClass}">${player.roleText}</span>`;
-                    break;
-                case 'st_moderator':
-                    roleClass = 'role-st_moderator';
-                    roleHtml = `<span class="player-role ${roleClass}">${player.roleText}</span>`;
-                    break;
-                case 'moderator':
-                    roleClass = 'role-moderator';
-                    roleHtml = `<span class="player-role ${roleClass}">${player.roleText}</span>`;
-                    break;
-                case 'gl_helper':
-                    roleClass = 'role-gl_helper';
-                    roleHtml = `<span class="player-role ${roleClass}">${player.roleText}</span>`;
-                    break;
-                case 'st_helper':
-                    roleClass = 'role-st_helper';
-                    roleHtml = `<span class="player-role ${roleClass}">${player.roleText}</span>`;
-                    break;
-                case 'helper':
-                    roleClass = 'role-helper';
-                    roleHtml = `<span class="player-role ${roleClass}">${player.roleText}</span>`;
-                    break;
-                case 'beta':
-                    roleClass = 'role-beta';
-                    roleHtml = `<span class="player-role ${roleClass}">${player.roleText}</span>`;
-                    break;
-                default:
-                    roleHtml = '';
-            }
+            const daysOnServer = getDaysBetween(player.joinDate, today);
+            const roleText = getRoleText(player.role);
+            const roleClass = getRoleClass(player.role);
             
             html += `
                 <div class="player-card">
-                    <div class="player-info">
-                        <div class="player-name">${player.name}</div>
-                        ${roleHtml}
-                    </div>
-                    <div class="player-stats">
-                        <div class="player-join-date">📅 ${formatDate(player.joinDate)}</div>
-                        <div class="player-days">⏱ ${daysOnServer} дн.</div>
+                    <div class="player-grid">
+                        <div class="player-left">
+                            <div class="player-name">${player.name}</div>
+                            ${roleText ? `<div class="player-role ${roleClass}">${roleText}</div>` : ''}
+                        </div>
+                        <div class="player-right">
+                            <div class="player-join-date">📅 ${formatDate(player.joinDate)}</div>
+                            <div class="player-days">⏱ ${daysOnServer} дн.</div>
+                        </div>
                     </div>
                 </div>
             `;
