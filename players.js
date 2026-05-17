@@ -29,7 +29,6 @@ const playersData = [
     // { name: "ПримерБетаТестера", role: "beta", roleText: "Бета-тестер", joinDate: "2026-05-05" },
     
     // Обычные игроки (без роли)
-    { name: "Guraky", role: null, joinDate: "2025-10-23" },
     { name: "Okosan2", role: null, joinDate: "2025-12-20" },
     { name: "faks52", role: null, joinDate: "2025-11-12" },
     { name: "Skortek", role: null, joinDate: "2025-09-13" },
