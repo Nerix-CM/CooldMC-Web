@@ -119,7 +119,17 @@ function getDaysBetween(startDate, endDate) {
 
 function sortPlayersByRoleAndDays(players) {
     const today = new Date().toISOString().split('T')[0];
-    const roleOrder = { admin: 0, moderator: 1, beta: 2 };
+    const roleOrder = { 
+        gl_admin: 0,      // ГЛ.Администратор
+        admin: 1,         // Администратор
+        gl_moderator: 2,  // ГЛ.Модератор
+        st_moderator: 3,  // СТ.Модератор
+        moderator: 4,     // Модератор
+        gl_helper: 5,     // ГЛ.Хелпер
+        st_helper: 6,     // СТ.Хелпер
+        helper: 7,        // Хелпер
+        beta: 8           // Бета-тестер
+    };
     
     return [...players].sort((a, b) => {
         const orderA = roleOrder[a.role] ?? 99;
@@ -179,15 +189,47 @@ function renderPlayersPage() {
             const daysOnServer = getDaysBetween(player.joinDate, new Date().toISOString().split('T')[0]);
             let roleClass = '';
             let roleHtml = '';
-            if (player.role === 'admin') {
-                roleClass = 'role-admin';
-                roleHtml = `<span class="player-role ${roleClass}">${player.roleText}</span>`;
-            } else if (player.role === 'moderator') {
-                roleClass = 'role-moderator';
-                roleHtml = `<span class="player-role ${roleClass}">${player.roleText}</span>`;
-            } else if (player.role === 'beta') {
-                roleClass = 'role-beta';
-                roleHtml = `<span class="player-role ${roleClass}">${player.roleText}</span>`;
+            
+            // Определяем класс и текст роли
+            switch(player.role) {
+                case 'gl_admin':
+                    roleClass = 'role-gl_admin';
+                    roleHtml = `<span class="player-role ${roleClass}">${player.roleText}</span>`;
+                    break;
+                case 'admin':
+                    roleClass = 'role-admin';
+                    roleHtml = `<span class="player-role ${roleClass}">${player.roleText}</span>`;
+                    break;
+                case 'gl_moderator':
+                    roleClass = 'role-gl_moderator';
+                    roleHtml = `<span class="player-role ${roleClass}">${player.roleText}</span>`;
+                    break;
+                case 'st_moderator':
+                    roleClass = 'role-st_moderator';
+                    roleHtml = `<span class="player-role ${roleClass}">${player.roleText}</span>`;
+                    break;
+                case 'moderator':
+                    roleClass = 'role-moderator';
+                    roleHtml = `<span class="player-role ${roleClass}">${player.roleText}</span>`;
+                    break;
+                case 'gl_helper':
+                    roleClass = 'role-gl_helper';
+                    roleHtml = `<span class="player-role ${roleClass}">${player.roleText}</span>`;
+                    break;
+                case 'st_helper':
+                    roleClass = 'role-st_helper';
+                    roleHtml = `<span class="player-role ${roleClass}">${player.roleText}</span>`;
+                    break;
+                case 'helper':
+                    roleClass = 'role-helper';
+                    roleHtml = `<span class="player-role ${roleClass}">${player.roleText}</span>`;
+                    break;
+                case 'beta':
+                    roleClass = 'role-beta';
+                    roleHtml = `<span class="player-role ${roleClass}">${player.roleText}</span>`;
+                    break;
+                default:
+                    roleHtml = '';
             }
             
             html += `
