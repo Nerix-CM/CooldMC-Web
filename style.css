@@ -572,12 +572,37 @@ body {
     background-color: rgba(0, 0, 0, 0.3);
 }
 
+/* Роли игроков */
+.role-gl_admin {
+    color: #FF5555;
+}
+
 .role-admin {
     color: #FF5555;
 }
 
+.role-gl_moderator {
+    color: #5555FF;
+}
+
+.role-st_moderator {
+    color: #5555FF;
+}
+
 .role-moderator {
     color: #5555FF;
+}
+
+.role-gl_helper {
+    color: #FFAA55;
+}
+
+.role-st_helper {
+    color: #FFAA55;
+}
+
+.role-helper {
+    color: #FFAA55;
 }
 
 .role-beta {
